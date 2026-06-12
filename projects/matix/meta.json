@@ -1,0 +1,16 @@
+{
+  "id": "matix",
+  "title": "MATIX Trójkołowce",
+  "industry": "Produkcja rowerów",
+  "category": "inne",
+  "description": "Producent rowerów trójkołowych i pojazdów rehabilitacyjnych, oferujący modele terenowe i elektryczne.",
+  "tools": "HTML · CSS · Google Maps API",
+  "timeToDeliver": "4 dni",
+  "previewUrl": "https://kamillimak.github.io/portfolio/projects/matix/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#2563EB",
+  "colorBg": "#0a1628",
+  "tags": ["HTML", "Google Maps", "Żórawina"],
+  "dateAdded": "2025-01"
+}

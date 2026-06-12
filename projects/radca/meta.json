@@ -1,0 +1,16 @@
+{
+  "id": "radca",
+  "title": "Kancelaria Radcy Prawnego",
+  "industry": "Prawo",
+  "category": "usługi",
+  "description": "Profesjonalna kancelaria radcy prawnego oferująca obsługę prawną dla firm i klientów indywidualnych.",
+  "tools": "HTML · CSS · Google Maps API",
+  "timeToDeliver": "4 dni",
+  "previewUrl": "https://kamillimak.github.io/portfolio/projects/radca/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#2563EB",
+  "colorBg": "#0a1628",
+  "tags": ["HTML", "Google Maps", "Żórawina"],
+  "dateAdded": "2025-01"
+}

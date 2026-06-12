@@ -1,0 +1,16 @@
+{
+  "id": "serwis-samochodowy",
+  "title": "AMS Bronowiaki",
+  "industry": "Serwis samochodowy",
+  "category": "automotive",
+  "description": "Serwis samochodowy oferujący diagnostykę, naprawy mechaniczne, wymianę opon i pełną obsługę pojazdów.",
+  "tools": "HTML · CSS · Google Maps API",
+  "timeToDeliver": "4 dni",
+  "previewUrl": "https://kamillimak.github.io/portfolio/projects/serwis-samochodowy/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#2563EB",
+  "colorBg": "#0a1628",
+  "tags": ["HTML", "Google Maps", "Żórawina"],
+  "dateAdded": "2025-01"
+}

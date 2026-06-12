@@ -1,0 +1,16 @@
+{
+  "id": "teurgium",
+  "title": "Teurgium Tarasy i Ogrody",
+  "industry": "Tarasy i ogrody premium",
+  "category": "usługi",
+  "description": "Firma oferująca tarasy, ogrody i podjazdy premium oraz systemy wyceny i kalkulatory materiałowe.",
+  "tools": "HTML · CSS · Google Maps API",
+  "timeToDeliver": "4 dni",
+  "previewUrl": "https://kamillimak.github.io/portfolio/projects/teurgium/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#2563EB",
+  "colorBg": "#0a1628",
+  "tags": ["HTML", "Google Maps", "Żórawina"],
+  "dateAdded": "2025-01"
+}
