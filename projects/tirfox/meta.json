@@ -1,16 +1,16 @@
 {
   "id": "tirfox",
-  "title": "Tirfox Serwis Samochodowy",
-  "industry": "Serwis samochodowy",
-  "category": "automotive",
-  "description": "Lokalny serwis samochodowy oferujący diagnostykę, naprawy mechaniczne i pełną obsługę pojazdów.",
-  "tools": "HTML · CSS · Google Maps API",
-  "timeToDeliver": "4 dni",
-  "previewUrl": "https://kamillimak.github.io/portfolio/projects/tirfox/",
+  "title": "TIRFOX",
+  "industry": "Mobilny serwis TIR",
+  "category": "serwis",
+  "description": "Redesign strony mobilnego serwisu ciężarówek z ofertą pomocy drogowej dostępnej całodobowo.",
+  "tools": "Claude Artifact · React · iframe",
+  "timeToDeliver": "5 dni",
+  "previewUrl": "https://kamillimak.github.io/Projects/projects/tirfox/",
   "liveUrl": "",
   "featured": false,
-  "colorAccent": "#2563EB",
-  "colorBg": "#0a1628",
-  "tags": ["HTML", "Google Maps", "Żórawina"],
-  "dateAdded": "2025-01"
+  "colorAccent": "#DC2626",
+  "colorBg": "#0F0F0F",
+  "tags": ["Claude Artifact", "React", "TIR"],
+  "dateAdded": "2026-06"
 }

@@ -1,0 +1,17 @@
+{
+  "id": "jacek-rakowski",
+  "title": "Jacek Rakowski",
+  "industry": "Blacharstwo i lakiernictwo samochodowe",
+  "category": "automotive",
+  "description": "Strona dla lokalnego zakladu blacharsko-lakierniczego z oferta, opiniami i mapa Google.",
+  "tools": "HTML · CSS · Google Maps API",
+  "timeToDeliver": "3 dni",
+  "previewUrl": "https://kamillimak.github.io/Projects/projects/jacek-rakowski/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#2563EB",
+  "colorBg": "#f5f7fb",
+  "tags": ["HTML", "Automotive", "Google Maps"],
+  "dateAdded": "2026-06",
+  "versions": ["index.html", "v2.html"]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "bikeon",
+  "title": "BikeOn",
+  "industry": "Serwis rowerowy",
+  "category": "serwis",
+  "description": "Serwis rowerowy z oferta napraw, terminarzem, formularzem i sportowa oprawa wizualna.",
+  "tools": "HTML · CSS · JavaScript",
+  "timeToDeliver": "3 dni",
+  "previewUrl": "https://kamillimak.github.io/Projects/projects/bikeon/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#E07B2E",
+  "colorBg": "#1A5225",
+  "tags": ["HTML", "Serwis rowerowy", "JavaScript"],
+  "dateAdded": "2026-06",
+  "versions": ["index.html", "v2.html"]
+}

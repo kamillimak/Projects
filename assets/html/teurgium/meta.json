@@ -4,13 +4,13 @@
   "industry": "Tarasy i ogrody premium",
   "category": "usługi",
   "description": "Firma oferująca tarasy, ogrody i podjazdy premium oraz systemy wyceny i kalkulatory materiałowe.",
-  "tools": "Claude Artifact · React · iframe",
+  "tools": "HTML · CSS · Google Maps API",
   "timeToDeliver": "4 dni",
-  "previewUrl": "https://kamillimak.github.io/Projects/projects/teurgium/",
+  "previewUrl": "https://kamillimak.github.io/portfolio/projects/teurgium/",
   "liveUrl": "",
   "featured": false,
-  "colorAccent": "#9CAD74",
-  "colorBg": "#151811",
-  "tags": ["Claude Artifact", "React", "Ogrody"],
-  "dateAdded": "2026-06"
+  "colorAccent": "#2563EB",
+  "colorBg": "#0a1628",
+  "tags": ["HTML", "Google Maps", "Żórawina"],
+  "dateAdded": "2025-01"
 }
