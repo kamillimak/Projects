@@ -1,0 +1,6 @@
+{
+  "name": "Teurgium - Tarasy i Ogrody Premium",
+  "description": "Nowoczesna, wysokowydajna platforma ofertowo-konfiguracyjna dla luksusowych tarasów, płyt ceramicznych i aranżacji otoczenia domów.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
