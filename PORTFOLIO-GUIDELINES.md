@@ -1,4 +1,4 @@
-# 📋 PORTFOLIO — Wytyczne dla narzędzi AI
+﻿# 📋 PORTFOLIO — Wytyczne dla narzędzi AI
 
 **Projekt:** Portfolio Kamil Mikołajczyk · Future IT  
 **Repo:** github.com/[twój-nick]/portfolio  
@@ -16,7 +16,7 @@ portfolio/
 │   ├── ams-bronowicki/
 │   │   ├── index.html      ← Gotowa strona klienta
 │   │   └── meta.json       ← Metadane projektu (patrz sekcja 3)
-│   ├── tirfox/
+│   ├── tirfix/
 │   │   ├── index.html
 │   │   └── meta.json
 │   └── [nowy-projekt]/

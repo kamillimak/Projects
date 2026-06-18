@@ -1,12 +1,12 @@
-{
-  "id": "tirfox",
-  "title": "TIRFOX",
+﻿{
+  "id": "tirfix",
+  "title": "TIRFIX",
   "industry": "Mobilny serwis TIR",
   "category": "serwis",
   "description": "Redesign strony mobilnego serwisu ciężarówek z ofertą pomocy drogowej dostępnej całodobowo.",
   "tools": "Claude Artifact · React · iframe",
   "timeToDeliver": "5 dni",
-  "previewUrl": "https://kamillimak.github.io/Projects/projects/tirfox/",
+  "previewUrl": "https://kamillimak.github.io/Projects/projects/tirfix/",
   "liveUrl": "",
   "featured": false,
   "colorAccent": "#DC2626",
