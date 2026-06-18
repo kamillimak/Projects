@@ -4,6 +4,10 @@ Date: 2026-06-12
 
 ## Completed changes
 
+- Added a formal GitHub project integration workflow in `PROJECT-INTEGRATION.md`.
+- Added `sources/README.md` as the ignored working area for external GitHub project sources.
+- Added `scripts/validate-portfolio.ps1` to verify project cards, versions, metadata, and return navigation.
+- Added `.gitignore` rules to keep source working copies, dependencies, build outputs, caches, and env files out of the publishing repo.
 - Removed the URL field from the project details modal because the displayed addresses were placeholders.
 - Added a persistent "Powrot do portfolio" bar to every project that can be opened.
 - Added project variants:
@@ -25,9 +29,19 @@ Every project exposed through `data-preview` in the main `index.html` must inclu
 
 Projects with multiple variants must expose the same version switcher on the card, in the modal, and on every variant page.
 
+## External GitHub project workflow
+
+Treat this repo as the publishing portfolio. Put cloned or copied source repos in `sources/[slug]/` or another external working folder, adapt/build them there, then copy only the static output into `projects/[slug]/`.
+
+Before committing, run:
+
+`powershell -ExecutionPolicy Bypass -File scripts/validate-portfolio.ps1`
+
 ## Important files
 
 - Main portfolio: `index.html`
+- Project integration workflow: `PROJECT-INTEGRATION.md`
+- Portfolio validator: `scripts/validate-portfolio.ps1`
 - Published projects: `projects/*`
 - Source HTML variants: `assets/html/*`
 - Portfolio rules: `PORTFOLIO-GUIDELINES.md`

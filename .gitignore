@@ -1,0 +1,17 @@
+# Working source projects imported from other repositories.
+sources/*/
+!sources/README.md
+
+# Local dependency/build folders from adapted projects.
+**/node_modules/
+**/.next/
+**/.vercel/
+**/dist/
+**/build/
+**/.cache/
+
+# Local environment files.
+.env
+.env.*
+!.env.example
+
