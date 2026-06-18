@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kamil Mikołajczyk — IT Project & Product Delivery</title>
+  <meta name="description" content="Kamil Mikołajczyk pomaga firmom realizować projekty IT, produkty cyfrowe, integracje, e-commerce, ERP i transformacje biznesowe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #070B10;
+      --surface: #101720;
+      --surface-2: #151D28;
+      --line: #253142;
+      --text: #F6F7F9;
+      --muted: #AAB4C2;
+      --soft: #D7DCE4;
+      --blue: #4EA2FF;
+      --gold: #D6B47C;
+      --green: #7FD0A6;
+      --shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(78,162,255,.18), transparent 30%),
+        radial-gradient(circle at 88% 0%, rgba(214,180,124,.15), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 28%);
+      z-index: -1;
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      background: rgba(7,11,16,.84);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(16px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(214,180,124,.55);
+      object-fit: cover;
+      background: #121212;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+      min-width: 0;
+    }
+    .brand-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0;
+      font-size: .95rem;
+      white-space: nowrap;
+    }
+    .brand-role {
+      color: var(--muted);
+      font-size: .72rem;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-pill {
+      color: #071019 !important;
+      background: var(--gold);
+      padding: 8px 13px;
+      border-radius: 999px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: 48px;
+      align-items: center;
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 56px 0 44px;
+    }
+    .hero-copy { max-width: 680px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 22px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--gold);
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.55rem, 6vw, 5.15rem);
+      line-height: .96;
+      letter-spacing: 0;
+      margin-bottom: 22px;
+    }
+    .lead {
+      color: var(--soft);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      max-width: 620px;
+      margin-bottom: 28px;
+    }
+    .quote {
+      border-left: 3px solid var(--blue);
+      padding-left: 16px;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+      max-width: 620px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .9rem;
+      border: 1px solid var(--line);
+    }
+    .btn-primary { background: var(--blue); color: #06101A; border-color: var(--blue); }
+    .btn-ghost { color: var(--text); background: rgba(255,255,255,.03); }
+
+    .hero-visual {
+      position: relative;
+      min-height: 620px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .72;
+    }
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7,11,16,.08), rgba(7,11,16,.62));
+    }
+    .cutout {
+      position: absolute;
+      left: 50%;
+      bottom: -28px;
+      z-index: 2;
+      width: min(88%, 520px);
+      transform: translateX(-50%);
+      filter: drop-shadow(0 28px 48px rgba(0,0,0,.46));
+    }
+    .visual-badge {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      z-index: 3;
+      display: grid;
+      gap: 4px;
+      padding: 12px 14px;
+      background: rgba(7,11,16,.72);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+    .visual-badge strong { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; }
+    .visual-badge span { color: var(--muted); font-size: .8rem; }
+
+    section {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 72px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+    .section-head h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      line-height: 1.05;
+    }
+    .section-head p {
+      color: var(--muted);
+      max-width: 520px;
+      font-size: .95rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 32px;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat span { color: var(--muted); font-size: .86rem; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+    .logo-panel,
+    .about-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .logo-panel {
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      min-height: 360px;
+    }
+    .logo-card {
+      background: #F5F5F5;
+      border-radius: 10px;
+      padding: 28px;
+    }
+    .sygnet-card {
+      background: #141414;
+      border-radius: 10px;
+      padding: 22px;
+    }
+    .about-panel p {
+      color: var(--soft);
+      margin-bottom: 18px;
+    }
+    .about-panel p:last-child { margin-bottom: 0; }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .service {
+      min-height: 152px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .service-num {
+      color: var(--gold);
+      font-size: .75rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .service h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .service p {
+      color: var(--muted);
+      font-size: .84rem;
+      line-height: 1.5;
+    }
+
+    .project-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .project-link {
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(135deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px;
+      text-decoration: none;
+    }
+    .project-link span {
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .project-link strong {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+    }
+    .project-link:hover { border-color: var(--blue); }
+
+    .contact-band {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      background: linear-gradient(135deg, rgba(78,162,255,.18), rgba(214,180,124,.13));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .contact-band h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      margin-bottom: 6px;
+    }
+    .contact-band p { color: var(--soft); }
+
+    footer {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 28px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    @media (max-width: 900px) {
+      .nav { padding: 0 18px; }
+      .brand-role { display: none; }
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: .78rem; }
+      .hero { grid-template-columns: 1fr; width: min(100% - 32px, 720px); }
+      .hero-visual { min-height: 520px; }
+      section, footer { width: min(100% - 32px, 720px); }
+      .about-grid, .service-grid, .project-strip, .stats { grid-template-columns: 1fr; }
+      .section-head, .contact-band { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links a[href="#services"], .nav-links a[href="#projects"] { display: none; }
+      .hero { padding-top: 34px; }
+      .hero-visual { min-height: 430px; }
+      .logo-panel, .about-panel, .contact-band { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="index-v2.html" aria-label="Kamil Mikołajczyk">
+      <img class="brand-mark" src="assets/brand/sygnet-km.png" alt="Sygnet KM" />
+      <span class="brand-text">
+        <span class="brand-name">Kamil Mikołajczyk</span>
+        <span class="brand-role">IT Project & Product Delivery</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="#about">O mnie</a>
+      <a href="#services">Usługi</a>
+      <a href="#projects">Projekty</a>
+      <a href="index.html">Wersja 1</a>
+      <a class="nav-pill" href="mailto:kamil@futureit.pl">Kontakt</a>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Konsulting IT · Product delivery · Transformacja cyfrowa</p>
+        <h1>Przekształcam pomysły biznesowe w produkty cyfrowe.</h1>
+        <p class="lead">Pomagam firmom skutecznie realizować projekty IT — od pomysłu i analizy biznesowej, przez planowanie i koordynację zespołów, aż po wdrożenie gotowego rozwiązania.</p>
+        <p class="quote">Pomagam firmom dostarczać projekty IT na czas, w budżecie i z realnym wpływem na wyniki biznesowe.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#services">Zobacz zakres usług</a>
+          <a class="btn btn-ghost" href="#projects">Realizacje</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>9+</strong><span>lat doświadczenia w projektach technologicznych</span></div>
+          <div class="stat"><strong>15 mln+</strong><span>łącznej wartości prowadzonych projektów</span></div>
+          <div class="stat"><strong>ERP · API · e-commerce</strong><span>obszary, w których łączę biznes i technologię</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Zdjęcie Kamila Mikołajczyka">
+        <img class="hero-bg" src="assets/brand/kamil-ai-background.png" alt="Kamil Mikołajczyk na tle technologicznej sieci" />
+        <img class="cutout" src="assets/brand/kamil-cutout.png" alt="Portret Kamila Mikołajczyka bez tła" />
+        <div class="visual-badge">
+          <strong>Business-first IT</strong>
+          <span>Strategia, zespoły, wdrożenia</span>
+        </div>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="section-head">
+        <h2>Łączę potrzeby biznesowe z możliwościami technologii.</h2>
+        <p>Wersja 2 portfolio pokazuje mnie nie tylko jako wykonawcę stron, ale jako partnera w prowadzeniu projektów IT i rozwoju produktów cyfrowych.</p>
+      </div>
+      <div class="about-grid">
+        <div class="logo-panel">
+          <div class="logo-card">
+            <img src="assets/brand/logo-km.png" alt="Logo Kamil Mikołajczyk" />
+          </div>
+          <div class="sygnet-card">
+            <img src="assets/brand/sygnet-km.png" alt="Sygnet Kamil Mikołajczyk" />
+          </div>
+        </div>
+        <div class="about-panel">
+          <p>Posiadam ponad 9 lat doświadczenia w zarządzaniu projektami technologicznymi, e-commerce, systemami ERP oraz platformami internetowymi. Pracowałem zarówno z dużymi organizacjami, jak i firmami rozwijającymi własne produkty cyfrowe.</p>
+          <p>Zarządzałem projektami o łącznej wartości przekraczającej 15 mln zł, prowadząc zespoły deweloperskie, UX/UI, QA oraz partnerów zewnętrznych.</p>
+          <p>Specjalizuję się w łączeniu potrzeb biznesowych z możliwościami technologicznymi, dzięki czemu projekty są realizowane szybciej, efektywniej i z większą wartością dla organizacji.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="section-head">
+        <h2>Zakres usług</h2>
+        <p>Od analizy i roadmapy, przez koordynację zespołów, po wdrożenie i usprawnienie procesów projektowych.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service"><div class="service-num">01</div><h3>Zarządzanie projektami IT</h3><p>Prowadzenie projektów technologicznych i cyfrowych transformacji od planu do wdrożenia.</p></article>
+        <article class="service"><div class="service-num">02</div><h3>Analiza biznesowa</h3><p>Definiowanie wymagań, mapowanie procesów i przekładanie potrzeb biznesu na zakres prac.</p></article>
+        <article class="service"><div class="service-num">03</div><h3>Product Owner support</h3><p>Rozwój produktów cyfrowych, priorytetyzacja backlogu i budowa roadmap produktowych.</p></article>
+        <article class="service"><div class="service-num">04</div><h3>Planowanie wdrożeń</h3><p>Koordynacja release'ów, harmonogramów, ryzyk, zależności i komunikacji między zespołami.</p></article>
+        <article class="service"><div class="service-num">05</div><h3>Optymalizacja procesów</h3><p>Usprawnianie pracy zespołów, procesów biznesowych i przepływu informacji w organizacji.</p></article>
+        <article class="service"><div class="service-num">06</div><h3>Agile, Scrum, Kanban</h3><p>Zarządzanie zespołami Agile i dopasowanie sposobu pracy do realnych potrzeb projektu.</p></article>
+        <article class="service"><div class="service-num">07</div><h3>Integracje i API</h3><p>Koordynacja integracji systemów, ERP, platform e-commerce i usług zewnętrznych.</p></article>
+        <article class="service"><div class="service-num">08</div><h3>Audyty projektowe</h3><p>Diagnoza procesów, ryzyk, odpowiedzialności i wsparcie organizacji pracy zespołów.</p></article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <h2>Wybrane realizacje</h2>
+        <p>Wersja 2 zachowuje szybki dostęp do projektów przygotowanych w portfolio.</p>
+      </div>
+      <div class="project-strip">
+        <a class="project-link" href="projects/matix/index.html"><span>Produkt cyfrowy</span><strong>MATIX Bike</strong></a>
+        <a class="project-link" href="projects/bikeon/index.html"><span>Serwis lokalny</span><strong>BikeOn</strong></a>
+        <a class="project-link" href="projects/teurgium/index.html"><span>Claude Artifact</span><strong>Teurgium</strong></a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-band">
+        <div>
+          <h2>Masz projekt IT do uporządkowania?</h2>
+          <p>Porozmawiajmy o tym, jak dowieźć go szybciej, czyściej i z większą wartością dla biznesu.</p>
+        </div>
+        <a class="btn btn-primary" href="mailto:kamil@futureit.pl">Napisz do mnie</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Kamil Mikołajczyk · Future IT · Portfolio v2
+  </footer>
+</body>
+</html>
