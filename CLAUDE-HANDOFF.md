@@ -13,7 +13,7 @@ Date: 2026-06-12
 - Added project variants:
   - BikeOn: v1, v2
   - Jacek Rakowski: v1, v2
-  - MATIX Bike: v1, v2, v3
+  - MATIX Bike: v1, v2
 - Version links are available on the portfolio cards, in the project modal, and inside each version page.
 - Added a scroll-to-top button to the main portfolio.
 - Added local wrapper pages for the TEURGIUM and TIRFOX Claude Artifact embeds.
