@@ -746,6 +746,7 @@
          data-desc="Interaktywny prototyp firmy realizującej tarasy, ogrody i podjazdy premium, osadzony jako projekt Claude Artifact."
          data-tools="Claude Artifact · React"
          data-time="4 dni"
+         data-versions="v1|projects/teurgium/index.html,v2|projects/teurgium/v2.html"
          data-preview="projects/teurgium/index.html">
       <div class="card-preview">
         <div class="browser-bar">
@@ -754,21 +755,19 @@
           <div class="browser-dot d-green"></div>
           <div class="browser-url">Teurgium</div>
         </div>
-        <div class="page-mock" style="background:#151811;">
-          <div class="mock-hero-bar" style="background:linear-gradient(90deg,#29331f,#9cad7444);"></div>
-          <div class="mock-row">
-            <div class="mock-block" style="height:45px;background:#242a1e;"></div>
-            <div class="mock-block" style="height:45px;background:#303829;max-width:80px;"></div>
-          </div>
-          <div class="mock-row" style="gap:4px;">
-            <div class="mock-block" style="height:35px;background:#252b20;border-radius:4px;"></div>
-            <div class="mock-block" style="height:35px;background:#252b20;border-radius:4px;"></div>
-          </div>
+        <div class="page-mock" style="padding:0;background:#151811;overflow:hidden;">
+          <img src="assets/previews/teurgium.grafika.png" alt="Podgląd projektu Teurgium" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
         </div>
       </div>
       <div class="card-body">
         <p class="card-industry">Tarasy i ogrody premium</p>
-        <h2 class="card-title">Teurgium Tarasy i Ogrody</h2>
+        <div class="card-title-row">
+          <h2 class="card-title">Teurgium Tarasy i Ogrody</h2>
+          <div class="version-links">
+            <a class="version-link" href="projects/teurgium/index.html">v1</a>
+            <a class="version-link" href="projects/teurgium/v2.html">v2</a>
+          </div>
+        </div>
         <p class="card-desc">Interaktywny prototyp oferty tarasów, ogrodów i podjazdów premium.</p>
         <div class="card-footer">
           <div class="tags"><span class="tag">Claude</span><span class="tag">React</span><span class="tag">Ogrody</span></div>
@@ -867,28 +866,16 @@
          data-desc="Strona dla Kancelarii Radcy Prawnego Jowitę Tomczak. Elegancki minimalizm, sekcja specjalizacji, formularz kontaktowy z obszarami prawa."
          data-tools="HTML · CSS"
          data-time="5 dni"
-         data-url="kancelaria-tomczak.pl">
+         data-url="https://kancelaria-jtomczak.pl">
       <div class="card-preview">
         <div class="browser-bar">
           <div class="browser-dot d-red"></div>
           <div class="browser-dot d-yellow"></div>
           <div class="browser-dot d-green"></div>
-          <div class="browser-url">kancelaria-tomczak.pl</div>
+          <div class="browser-url">kancelaria-jtomczak.pl</div>
         </div>
-        <div class="page-mock" style="background:#f5f2eb;">
-          <div class="mock-hero-bar" style="background:linear-gradient(90deg,#e8e0d0,#c8b89050);height:60px;"></div>
-          <div style="display:flex;gap:4px;margin-top:8px;">
-            <div style="width:3px;height:60px;background:#8b7355;border-radius:2px;"></div>
-            <div style="flex:1;">
-              <div style="height:10px;background:#c8b89060;border-radius:2px;margin-bottom:4px;"></div>
-              <div style="height:10px;background:#c8b89040;border-radius:2px;width:70%;margin-bottom:4px;"></div>
-              <div style="height:10px;background:#c8b89040;border-radius:2px;width:85%;"></div>
-            </div>
-          </div>
-          <div class="mock-row" style="margin-top:8px;gap:4px;">
-            <div class="mock-block" style="height:28px;background:#e8e0d0;border-radius:3px;"></div>
-            <div class="mock-block" style="height:28px;background:#e8e0d0;border-radius:3px;"></div>
-          </div>
+        <div class="page-mock" style="padding:0;background:#16213f;overflow:hidden;">
+          <img src="assets/previews/kancelaria.grafika.png" alt="Podgląd strony kancelaria-jtomczak.pl" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
         </div>
       </div>
       <div class="card-body">
@@ -1015,6 +1002,13 @@
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
+      const externalUrl = card.dataset.url;
+      if (externalUrl) {
+        const href = externalUrl.startsWith('http') ? externalUrl : `https://${externalUrl}`;
+        window.open(href, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
       document.getElementById('modal-industry').textContent = card.dataset.industry || '';
       document.getElementById('modal-title').textContent = card.dataset.title || '';
       document.getElementById('modal-desc').textContent = card.dataset.desc || '';

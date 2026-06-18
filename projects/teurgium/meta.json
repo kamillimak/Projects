@@ -8,6 +8,7 @@
   "timeToDeliver": "4 dni",
   "previewUrl": "https://kamillimak.github.io/Projects/projects/teurgium/",
   "liveUrl": "",
+  "versions": ["index.html", "v2.html"],
   "featured": false,
   "colorAccent": "#9CAD74",
   "colorBg": "#151811",
