@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kamil Mikołajczyk — Portfolio v3</title>
   <meta name="description" content="Portfolio Kamila Mikołajczyka w wersji 3: projekty IT, produkty cyfrowe i realizacje stron internetowych." />
+  <link rel="icon" type="image/png" href="assets/brand/logo-km.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
@@ -49,7 +50,7 @@
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
       font-size: 1rem;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       color: var(--text);
       text-decoration: none;
       display: inline-flex;
@@ -57,11 +58,13 @@
       gap: 0.6rem;
     }
     .nav-logo img {
-      width: 34px;
+      width: 118px;
       height: 34px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid rgba(214,180,124,.5);
+      border-radius: 6px;
+      object-fit: contain;
+      padding: 3px 9px;
+      background: #fff;
+      border: 1px solid rgba(255,255,255,.18);
     }
     .nav-logo span { color: var(--accent); }
     nav a {
@@ -85,15 +88,35 @@
 
     /* ─── HERO ─── */
     .hero {
-      padding: 7.5rem 2rem 4.5rem;
-      max-width: 1120px;
+      position: relative;
+      padding: 7.75rem 2rem 4.75rem;
+      max-width: 1180px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      grid-template-columns: minmax(0, 0.96fr) minmax(360px, 1.04fr);
       align-items: center;
       gap: 3rem;
     }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 56px 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(96,165,250,.32), transparent);
+      pointer-events: none;
+    }
     .hero-copy { max-width: 640px; }
+    .hero-logo {
+      width: 186px;
+      height: auto;
+      display: block;
+      padding: 0.7rem 0.9rem;
+      margin-bottom: 1.65rem;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 18px 42px rgba(0,0,0,.25);
+    }
     .hero-eyebrow {
       font-size: 0.75rem;
       font-weight: 600;
@@ -132,46 +155,35 @@
     .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
     .hero-portrait {
       position: relative;
-      min-height: 520px;
+      min-height: 560px;
       display: flex;
       align-items: end;
       justify-content: center;
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      border: 1px solid rgba(96,165,250,.22);
+      border-radius: 18px;
       background:
-        radial-gradient(circle at 50% 18%, rgba(59,130,246,.22), transparent 30%),
-        linear-gradient(180deg, #151515, #090909);
+        linear-gradient(180deg, rgba(6,22,42,.95), rgba(4,9,18,.98));
       overflow: hidden;
+      box-shadow: 0 28px 70px rgba(0,0,0,.42);
     }
     .hero-portrait::before {
       content: "";
       position: absolute;
-      width: 360px;
-      height: 360px;
-      border: 1px solid rgba(214,180,124,.22);
-      border-radius: 50%;
-      top: 58px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .hero-portrait::after {
-      content: "KM";
-      position: absolute;
-      top: 96px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 6.5rem;
-      font-weight: 700;
-      color: rgba(214,180,124,.08);
-      letter-spacing: 0;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(90deg, rgba(2,6,16,.36), transparent 30%),
+        linear-gradient(180deg, transparent 52%, rgba(3,7,14,.82));
+      pointer-events: none;
     }
     .hero-portrait img {
-      position: relative;
-      z-index: 2;
-      width: min(94%, 500px);
-      margin-bottom: -18px;
-      filter: drop-shadow(0 24px 44px rgba(0,0,0,.55));
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
     .hero-badge {
       position: absolute;
@@ -649,7 +661,8 @@
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .hero { grid-template-columns: 1fr; padding-top: 6rem; }
-      .hero-portrait { min-height: 420px; }
+      .hero-logo { width: 158px; }
+      .hero-portrait { min-height: 430px; }
       .projects-grid { grid-template-columns: 1fr; }
       .card.featured { grid-template-columns: 1fr; }
       .contact { flex-direction: column; }
@@ -660,7 +673,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo"><img src="assets/brand/sygnet-km.png" alt="Sygnet KM" />KM<span>.</span>portfolio</a>
+  <a href="#" class="nav-logo"><img src="assets/brand/logo-km.png" alt="Logo Kamil Mikołajczyk" /><span>Portfolio</span></a>
   <div class="nav-links">
     <a href="#projects">Projekty</a>
     <a href="#process">Proces</a>
@@ -674,17 +687,18 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-copy">
+    <img class="hero-logo" src="assets/brand/logo-km.png" alt="Logo Kamil Mikołajczyk" />
     <p class="hero-eyebrow">IT Project Delivery · Product Owner Support · Web</p>
     <h1>Pomagam dowozić<br/> <em>skuteczne</em> projekty IT</h1>
     <p class="hero-sub">Łączę analizę biznesową, planowanie, koordynację zespołów i wdrożenia, żeby pomysły biznesowe zmieniały się w działające produkty cyfrowe.</p>
-    <p class="hero-note">Ta wersja bazuje na pierwszym układzie portfolio i zostawia sekcję realizacji w aktualnym stylu. Zmieniamy tylko otwarcie strony na bardziej osobisty wariant z portretem i sygnetem KM.</p>
+    <p class="hero-note">Ta wersja bazuje na pierwszym układzie portfolio i zostawia sekcję realizacji w aktualnym stylu. Zmieniamy tylko otwarcie strony na bardziej osobisty wariant ze zdjęciem i identyfikacją KM.</p>
     <div class="hero-actions">
       <a href="#projects" class="btn-primary">Zobacz realizacje</a>
       <a href="#process" class="btn-ghost">Jak działam</a>
     </div>
   </div>
   <div class="hero-portrait" aria-label="Portret Kamila Mikołajczyka">
-    <img src="assets/brand/kamil-cutout.png" alt="Kamil Mikołajczyk" />
+    <img src="assets/brand/kamil-cv-hero.png" alt="Kamil Mikołajczyk" />
     <div class="hero-badge">
       <strong>Kamil Mikołajczyk</strong>
       <span>IT · e-commerce · ERP · produkty cyfrowe</span>
