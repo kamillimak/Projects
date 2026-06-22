@@ -48,7 +48,7 @@ foreach ($meta in $metaFiles) {
   }
 }
 
-$portfolioPages = @('index.html', 'index-v3.html') |
+$portfolioPages = @('index.html') |
   ForEach-Object { Join-Path $Root $_ } |
   Where-Object { Test-Path -LiteralPath $_ -PathType Leaf }
 

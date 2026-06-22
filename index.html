@@ -47,17 +47,17 @@
     .nav-logo {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.05rem;
       letter-spacing: -0.02em;
       color: var(--text);
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.7rem;
+      gap: 0.85rem;
     }
     .nav-logo img {
-      width: 72px;
-      height: 36px;
+      width: 98px;
+      height: 48px;
       object-fit: contain;
       display: block;
     }
@@ -99,7 +99,7 @@
       max-width: 1120px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 438px);
       align-items: center;
       gap: clamp(2rem, 5vw, 4.5rem);
     }
@@ -135,7 +135,9 @@
     .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
     .hero-visual {
       position: relative;
-      min-height: 520px;
+      width: min(100%, 438px);
+      aspect-ratio: 1 / 1;
+      justify-self: end;
       border-radius: 8px;
       overflow: hidden;
       background: #0b1220;
@@ -619,6 +621,11 @@
 
     @media (max-width: 640px) {
       nav { padding: 0 1rem; }
+      .nav-logo img {
+        width: 78px;
+        height: 40px;
+      }
+      .nav-logo span { font-size: 0.92rem; }
       .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
       .nav-links {
         position: fixed;
@@ -641,8 +648,9 @@
         padding-top: 6rem;
       }
       .hero-visual {
-        min-height: 380px;
         order: -1;
+        justify-self: center;
+        width: min(100%, 438px);
       }
       .projects-grid { grid-template-columns: 1fr; }
       .card.featured { grid-template-columns: 1fr; }
@@ -655,13 +663,11 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo"><img src="assets/brand/km-sygnet-transparent.png" alt="Logo Kamil Mikołajczyk" /><span>Portfolio</span></a>
+  <a href="#" class="nav-logo"><img src="assets/brand/km-sygnet-transparent.png" alt="Logo Kamil Mikołajczyk" /><span>Kamil Mikołajczyk</span></a>
   <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Otwórz menu" aria-expanded="false">☰</button>
   <div class="nav-links" id="nav-links">
     <a href="#projects">Projekty</a>
     <a href="#process">Proces</a>
-    <a href="index-v2.html">Wersja 2</a>
-    <a href="index-v3.html">Wersja 3</a>
     <a href="#contact">Kontakt</a>
     <a href="tel:+48577539333">+48 577-539-333</a>
     <a href="mailto:mikolajczykamil@gmail.com" class="nav-cta">Napisz →</a>
@@ -686,9 +692,9 @@
 
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stat"><span class="stat-val" id="count-projects">7</span><span class="stat-label">Zrealizowanych projektów</span></div>
-  <div class="stat"><span class="stat-val">~5 dni</span><span class="stat-label">Czas realizacji</span></div>
-  <div class="stat"><span class="stat-val">100%</span><span class="stat-label">Klientów z wizualizacją przed decyzją</span></div>
+  <div class="stat"><span class="stat-val" id="count-projects" data-count="7">0</span><span class="stat-label">Zrealizowanych projektów</span></div>
+  <div class="stat"><span class="stat-val" data-count="5" data-prefix="~" data-suffix=" dni">~0 dni</span><span class="stat-label">Czas realizacji</span></div>
+  <div class="stat"><span class="stat-val" data-count="100" data-suffix="%">0%</span><span class="stat-label">Klientów z wizualizacją przed decyzją</span></div>
   <div class="stat"><span class="stat-val">HTML+</span><span class="stat-label">Pliki gotowe do wdrożenia</span></div>
 </div>
 
@@ -1085,6 +1091,37 @@
       });
     });
   }
+
+  // ─── COUNTERS ───
+  const statValues = document.querySelectorAll('.stat-val[data-count]');
+  const animateStat = value => {
+    const target = Number(value.dataset.count || 0);
+    const prefix = value.dataset.prefix || '';
+    const suffix = value.dataset.suffix || '';
+    const duration = 1100;
+    const start = performance.now();
+
+    const tick = now => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(target * eased);
+      value.textContent = `${prefix}${current}${suffix}`;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.querySelectorAll('.stat-val[data-count]').forEach(animateStat);
+      statsObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.45 });
+
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) statsObserver.observe(statsBar);
 
   // ─── FILTER ───
   const filterBtns = document.querySelectorAll('.filter-btn');
