@@ -633,6 +633,42 @@
       font-weight: 600;
       text-transform: uppercase;
     }
+    .version-slider {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+    }
+    .version-slide {
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      min-width: 42px;
+      padding: 0.4rem 0.75rem;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .version-slide:hover {
+      color: var(--text);
+    }
+    .version-slide.active {
+      background: var(--project-accent, var(--accent));
+      color: #0D0D0D;
+      transform: translateY(-1px);
+    }
+    .version-slider-current {
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
 
     .back-to-top {
       position: fixed;
@@ -900,7 +936,7 @@
     <span class="tool-badge">Codex</span>
     <span class="tool-badge">AI Studio</span>
     <span class="tool-badge">Trae</span>
-    <span class="tool-badge">Last commit: Add dynamic portfolio features</span>
+    <span class="tool-badge">Last commit: Add Matix v3 and version slider</span>
   </div>
 </footer>
 
@@ -1014,6 +1050,7 @@
   const localProjectUrl = project => `projects/${project.slug}/index.html`;
   const normalizeTools = value => String(value || '').replace(/Â·|·/g, '-');
   const versionHref = (project, version) => `projects/${project.slug}/${version}`;
+  const versionLabel = index => `v${index + 1}`;
 
   function enhanceProject(source, meta) {
     const versions = Array.isArray(meta.versions) && meta.versions.length ? meta.versions : ['index.html'];
@@ -1157,20 +1194,42 @@
     modalVersions.innerHTML = '';
 
     if (project.versions.length > 1) {
-      modalVersions.innerHTML = `<span class="modal-versions-label">Wersje</span>${project.versions.map((version, index) => `<a class="version-link" href="${escapeHtml(versionHref(project, version))}">v${index + 1}</a>`).join('')}`;
+      modalVersions.innerHTML = `<span class="modal-versions-label">Wersje</span><div class="version-slider" role="tablist" aria-label="Wersje projektu">${project.versions.map((version, index) => `<button class="version-slide${index === 0 ? ' active' : ''}" type="button" role="tab" aria-selected="${index === 0 ? 'true' : 'false'}" data-version="${escapeHtml(version)}" data-version-index="${index}">${versionLabel(index)}</button>`).join('')}</div><span class="version-slider-current" id="modal-version-current">${versionLabel(0)} aktywna</span>`;
       modalVersions.classList.add('visible');
+      modalVersions.querySelectorAll('.version-slide').forEach(button => {
+        button.addEventListener('click', () => setModalVersion(project, button.dataset.version, Number(button.dataset.versionIndex || 0)));
+      });
+      setModalVersion(project, project.versions[0], 0);
     } else {
       modalVersions.classList.remove('visible');
+      const projectHref = project.external ? project.liveUrl : localProjectUrl(project);
+      modalLink.href = projectHref || '#';
+      modalLink.target = project.external ? '_blank' : '';
+      modalLink.rel = project.external ? 'noopener noreferrer' : '';
+      modalLink.style.display = projectHref ? '' : 'none';
+      modalLink.textContent = 'Zobacz projekt →';
     }
-
-    const projectHref = project.external ? project.liveUrl : localProjectUrl(project);
-    modalLink.href = projectHref || '#';
-    modalLink.target = project.external ? '_blank' : '';
-    modalLink.rel = project.external ? 'noopener noreferrer' : '';
-    modalLink.style.display = projectHref ? '' : 'none';
     modalContact.href = `mailto:mikolajczykamil@gmail.com?subject=${encodeURIComponent(project.contactSubject)}&body=${encodeURIComponent(`Cześć, interesuje mnie projekt podobny do: ${project.title}.`)}`;
     modalNote.textContent = `CTA kontaktowe ma już ustawiony temat: „${project.contactSubject}”.`;
     overlay.classList.add('open');
+  }
+
+  function setModalVersion(project, version, index) {
+    const href = project.external ? project.liveUrl : versionHref(project, version || 'index.html');
+    modalLink.href = href || '#';
+    modalLink.target = project.external ? '_blank' : '';
+    modalLink.rel = project.external ? 'noopener noreferrer' : '';
+    modalLink.style.display = href ? '' : 'none';
+    modalLink.textContent = `Zobacz ${versionLabel(index)} →`;
+
+    modalVersions.querySelectorAll('.version-slide').forEach(button => {
+      const active = Number(button.dataset.versionIndex || 0) === index;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    const current = document.getElementById('modal-version-current');
+    if (current) current.textContent = `${versionLabel(index)} aktywna`;
   }
 
   function observeCards() {
