@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jacek Rakowski – Blacharstwo i Lakiernictwo Samochodowe | Żórawina</title>
-<meta name="description" content="Jacek Rakowski – blacharstwo i lakiernictwo samochodowe w Żórawinie. Profesjonalne naprawy karoserii, lakierowanie. Tel: +48 501 515 757">
+<title>AutoJack – Blacharstwo i Lakiernictwo Samochodowe | Żórawina</title>
+<meta name="description" content="AutoJack – blacharstwo i lakiernictwo samochodowe w Żórawinie. Profesjonalne naprawy karoserii, lakierowanie. Tel: +48 501 515 757">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -166,24 +166,26 @@ footer a{color:rgba(255,255,255,.4);text-decoration:none}
   .strip-inner{gap:1rem;flex-direction:column}
 }
 </style>
-<style id="portfolio-return-style">
-  .portfolio-return{position:fixed;top:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 18px;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);box-shadow:0 1px 14px rgba(0,0,0,.22);font-family:Inter,Arial,sans-serif;color:#fff}
-  .portfolio-return a{color:#fff;text-decoration:none;font-size:14px;font-weight:700;line-height:1}
-  .portfolio-return a:hover{text-decoration:underline}
-  .portfolio-versions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .portfolio-versions span{font-size:12px;color:rgba(255,255,255,.62)}
-  .portfolio-versions a{padding:6px 9px;border:1px solid rgba(255,255,255,.22);border-radius:999px;font-size:12px;background:rgba(255,255,255,.08)}
-  @media(max-width:520px){.portfolio-return{align-items:flex-start;flex-direction:column}.portfolio-return a{font-size:13px}}
+<style id="portfolio-bar-style">
+#portfolio-bar{position:fixed;top:0;left:0;right:0;height:48px;min-height:0;background:#0F140A;border-bottom:1px solid rgba(184,224,64,0.2);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:99999;font-family:system-ui,-apple-system,sans-serif;gap:16px;box-sizing:border-box}
+#portfolio-bar a{text-decoration:none;display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.pbar-back{color:rgba(255,255,255,.65);transition:color .2s}.pbar-back:hover{color:#B8E040}.pbar-back svg{flex-shrink:0}.pbar-center{display:flex;align-items:center;gap:8px;min-width:0}.pbar-badge{background:#B8E040;color:#0F140A;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:3px}.pbar-label{font-size:.72rem;font-weight:500;color:rgba(255,255,255,.45);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pbar-nav{display:flex;align-items:center;gap:4px}.pbar-nav a,.pbar-nav span{color:rgba(255,255,255,.45);padding:6px 10px;border:1px solid rgba(255,255,255,.1);border-radius:4px;font-size:.68rem;font-weight:600;transition:color .2s,border-color .2s,background .2s}.pbar-nav a:hover{color:#B8E040;border-color:rgba(184,224,64,.4);background:rgba(184,224,64,.06)}.pbar-nav .pbar-disabled{opacity:.25;pointer-events:none}.pbar-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}body{padding-top:48px!important}body>nav,nav.solid,nav#nav,nav#navbar{top:48px!important}@media(max-width:720px){#portfolio-bar{padding:0 12px}.pbar-label{display:none}.pbar-nav a,.pbar-nav span{padding:5px 7px}.pbar-center{display:none}}
 </style>
 </head>
 <body>
-<div class="portfolio-return"><a href="../../index.html#projects">← Powrót do portfolio</a><div class="portfolio-versions"><span>Wersje</span><a href="index.html">v1</a><a href="v2.html">v2</a></div></div>
-
+<div id="portfolio-bar">
+  <a href="../../index.html#projects" class="pbar-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Powrót do portfolio
+  </a>
+  <div class="pbar-center"><span class="pbar-badge">AutoJack</span><span class="pbar-label">Wersja 1</span></div>
+  <div class="pbar-nav"><span class="pbar-disabled">v1</span><a href="v2.html">v2</a></div>
+</div>
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
     <div class="nav-logo">
-      Jacek Rakowski
+      AutoJack
       <span class="sub">Blacharstwo · Lakiernictwo Samochodowe</span>
     </div>
     <ul class="nav-links">
@@ -208,7 +210,7 @@ footer a{color:rgba(255,255,255,.4);text-decoration:none}
       </div>
       <h1>
         Blacharstwo<br>i Lakiernictwo
-        <span class="name">Jacek Rakowski</span>
+        <span class="name">AutoJack</span>
       </h1>
       <p class="hero-desc">Wieloletnie doświadczenie, uczciwe podejście, perfekcyjne wykończenie. Przywracamy Twoje auto do fabrycznego stanu.</p>
       <div class="hero-actions">
@@ -409,7 +411,7 @@ footer a{color:rgba(255,255,255,.4);text-decoration:none}
 <!-- MAP -->
 <div class="map-section">
   <iframe
-    title="Mapa dojazdu do Jacek Rakowski"
+    title="Mapa dojazdu do AutoJack"
     loading="lazy"
     allowfullscreen
     referrerpolicy="no-referrer-when-downgrade"
@@ -474,9 +476,9 @@ footer a{color:rgba(255,255,255,.4);text-decoration:none}
 
 <!-- FOOTER -->
 <footer>
-  <p><strong>Jacek Rakowski – Blacharstwo i Lakiernictwo Samochodowe</strong></p>
+  <p><strong>AutoJack – Blacharstwo i Lakiernictwo Samochodowe</strong></p>
   <p style="margin-top:.5rem">al. Niepodległości 57, 55-020 Żórawina &nbsp;·&nbsp; Tel: <a href="tel:+48501515757">+48 501 515 757</a></p>
-  <p style="margin-top:.5rem">© 2025 Jacek Rakowski. Wszelkie prawa zastrzeżone.</p>
+  <p style="margin-top:.5rem">© 2025 AutoJack. Wszelkie prawa zastrzeżone.</p>
 </footer>
 
 <script>

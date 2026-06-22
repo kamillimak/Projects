@@ -1,10 +1,10 @@
 {
   "id": "ams-bronowicki",
-  "title": "AMS Bronowicki",
+  "title": "AutoMechanik",
   "industry": "Serwis i warsztat samochodowy",
   "category": "automotive",
   "description": "Profesjonalny serwis samochodowy w Zorawinie z diagnostyka, naprawami i mapa dojazdu.",
-  "tools": "HTML · CSS · Google Maps API",
+  "tools": "HTML - CSS - Google Maps API",
   "timeToDeliver": "4 dni",
   "previewUrl": "https://kamillimak.github.io/Projects/projects/ams-bronowicki/",
   "liveUrl": "",
