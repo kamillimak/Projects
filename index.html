@@ -56,7 +56,7 @@
       align-items: center;
     }
     .nav-logo img {
-      height: 36px;
+      height: 42px;
       width: auto;
       max-width: 180px;
       object-fit: contain;
@@ -595,12 +595,43 @@
     .modal-close:hover { color: var(--text); }
     .modal-preview {
       height: clamp(260px, 44vh, 430px);
-      margin: 0 0 1.5rem;
       border: 1px solid color-mix(in srgb, var(--project-accent, var(--accent)), transparent 64%);
       border-radius: 12px;
       overflow: hidden;
       background: var(--card);
     }
+    .modal-preview-wrap {
+      position: relative;
+      margin: 0 0 1.5rem;
+    }
+    .modal-version-arrow {
+      position: absolute;
+      top: 50%;
+      z-index: 4;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border: 1px solid color-mix(in srgb, var(--project-accent, var(--accent)), transparent 42%);
+      border-radius: 999px;
+      background: rgba(13,13,13,0.78);
+      color: var(--text);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      line-height: 1;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.32);
+      transition: transform 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .modal-version-arrow.visible { display: inline-flex; }
+    .modal-version-arrow:hover {
+      transform: translateY(-50%) scale(1.05);
+      background: rgba(13,13,13,0.92);
+      border-color: var(--project-accent, var(--accent));
+    }
+    .modal-version-prev { left: 0.8rem; }
+    .modal-version-next { right: 0.8rem; }
     .modal-preview .card-preview {
       height: 100%;
       padding: 18px;
@@ -808,7 +839,7 @@
     @media (max-width: 640px) {
       nav { padding: 0 1rem; }
       .nav-logo img {
-        height: 28px;
+        height: 34px;
         max-width: 140px;
       }
       .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
@@ -849,7 +880,7 @@
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo" aria-label="Strona główna">
-    <img src="assets/brand/km-header-logo-white.jpg" alt="Logo Kamil Mikołajczyk" />
+    <img src="assets/brand/km-sygnet-gold-20260622.png" alt="Sygnet Kamil Mikołajczyk" />
   </a>
   <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Otwórz menu" aria-expanded="false">☰</button>
   <div class="nav-links" id="nav-links">
@@ -952,7 +983,7 @@
     <span class="tool-badge">Codex</span>
     <span class="tool-badge">AI Studio</span>
     <span class="tool-badge">Trae</span>
-    <span class="tool-badge">Last commit: Fix Matix version navigation and previews</span>
+    <span class="tool-badge">Last commit: Update automotive project previews and modal navigation</span>
   </div>
 </footer>
 
@@ -962,7 +993,11 @@
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <button class="modal-close" id="modal-close" type="button" aria-label="Zamknij">✕</button>
-    <div class="modal-preview" id="modal-preview" aria-hidden="true"></div>
+    <div class="modal-preview-wrap">
+      <button class="modal-version-arrow modal-version-prev" id="modal-version-prev" type="button" aria-label="Poprzednia wersja">‹</button>
+      <div class="modal-preview" id="modal-preview" aria-hidden="true"></div>
+      <button class="modal-version-arrow modal-version-next" id="modal-version-next" type="button" aria-label="Następna wersja">›</button>
+    </div>
     <p class="modal-industry" id="modal-industry"></p>
     <h2 id="modal-title"></h2>
     <p class="modal-desc" id="modal-desc"></p>
@@ -997,7 +1032,7 @@
 <script>
   const PROJECT_SOURCES = [
     { meta: 'projects/ams-bronowicki/meta.json', slug: 'ams-bronowicki', browserLabel: 'Moto Komis', previewImage: '', previewPosition: 'center top' },
-    { meta: 'projects/jacek-rakowski/meta.json', slug: 'jacek-rakowski', browserLabel: 'Skup Aut', previewImage: '', previewPosition: 'center top' },
+    { meta: 'projects/jacek-rakowski/meta.json', slug: 'jacek-rakowski', browserLabel: 'Skup Aut', previewImage: 'assets/previews/autojack.png', previewPosition: 'center top' },
     { meta: 'projects/tirfix/meta.json', slug: 'tirfix', browserLabel: 'Mobilny Serwis', previewImage: 'assets/previews/tirfix.grafika.png', previewPosition: 'center top' },
     { meta: 'projects/teurgium/meta.json', slug: 'teurgium', browserLabel: 'Teurgium', previewImage: 'assets/previews/teurgium.grafika.png', previewPosition: 'center top' },
     { meta: 'projects/bikeon/meta.json', slug: 'bikeon', browserLabel: 'Serwis Rowerowy', previewImage: '', previewPosition: 'center top' },
@@ -1032,11 +1067,15 @@
   const modalVersions = document.getElementById('modal-versions');
   const modalTags = document.getElementById('modal-tags');
   const modalPreview = document.getElementById('modal-preview');
+  const modalVersionPrev = document.getElementById('modal-version-prev');
+  const modalVersionNext = document.getElementById('modal-version-next');
   const modalLink = document.getElementById('modal-link');
   const modalContact = document.getElementById('modal-contact');
   const modalNote = document.getElementById('modal-cta-note');
   let projects = [];
   let currentFilter = 'all';
+  let activeModalProject = null;
+  let activeModalVersionIndex = 0;
 
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({
     '&': '&amp;',
@@ -1202,6 +1241,8 @@
 
   function openProjectModal(project) {
     if (!project) return;
+    activeModalProject = project;
+    activeModalVersionIndex = 0;
     document.getElementById('modal-industry').textContent = project.industry || '';
     document.getElementById('modal-title').textContent = project.title;
     document.getElementById('modal-desc').textContent = project.description || '';
@@ -1212,8 +1253,12 @@
     modalPreview.innerHTML = renderPreview(project, project.versions[0], 0);
     modalPreview.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
     modalPreview.style.setProperty('--project-bg', project.colorBg || '#111827');
+    modalVersionPrev.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
+    modalVersionNext.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
     modalTags.innerHTML = project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
     modalVersions.innerHTML = '';
+    modalVersionPrev.classList.toggle('visible', project.versions.length > 1);
+    modalVersionNext.classList.toggle('visible', project.versions.length > 1);
 
     if (project.versions.length > 1) {
       modalVersions.innerHTML = `<span class="modal-versions-label">Wersje</span><div class="version-slider" role="tablist" aria-label="Wersje projektu">${project.versions.map((version, index) => `<button class="version-slide${index === 0 ? ' active' : ''}" type="button" role="tab" aria-selected="${index === 0 ? 'true' : 'false'}" data-version="${escapeHtml(version)}" data-version-index="${index}">${versionLabel(index)}</button>`).join('')}</div><span class="version-slider-current" id="modal-version-current">${versionLabel(0)} aktywna</span>`;
@@ -1238,6 +1283,8 @@
 
   function setModalVersion(project, version, index) {
     const href = project.external ? project.liveUrl : versionHref(project, version || 'index.html');
+    activeModalProject = project;
+    activeModalVersionIndex = index;
     modalPreview.innerHTML = renderPreview(project, version || 'index.html', index);
     modalLink.href = href || '#';
     modalLink.target = project.external ? '_blank' : '';
@@ -1254,6 +1301,16 @@
     const current = document.getElementById('modal-version-current');
     if (current) current.textContent = `${versionLabel(index)} aktywna`;
   }
+
+  function shiftModalVersion(direction) {
+    if (!activeModalProject || activeModalProject.versions.length < 2) return;
+    const versions = activeModalProject.versions;
+    const nextIndex = (activeModalVersionIndex + direction + versions.length) % versions.length;
+    setModalVersion(activeModalProject, versions[nextIndex], nextIndex);
+  }
+
+  modalVersionPrev.addEventListener('click', () => shiftModalVersion(-1));
+  modalVersionNext.addEventListener('click', () => shiftModalVersion(1));
 
   function observeCards() {
     const observer = new IntersectionObserver(entries => {
