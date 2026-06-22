@@ -386,6 +386,22 @@
       transform: scale(1.01);
       transition: transform 0.45s ease, filter 0.45s ease;
     }
+    .preview-version-label {
+      position: absolute;
+      right: 14px;
+      top: 44px;
+      z-index: 2;
+      padding: 0.32rem 0.55rem;
+      border: 1px solid color-mix(in srgb, var(--project-accent), transparent 45%);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.68);
+      color: color-mix(in srgb, var(--project-accent), #fff 24%);
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+    }
     .card:hover .preview-img { transform: scale(1.045); filter: saturate(1.08) contrast(1.04); }
     .generated-preview {
       height: 100%;
@@ -857,7 +873,7 @@
     </div>
   </div>
   <div class="hero-visual" aria-label="Portret Kamila Mikołajczyka">
-    <img src="assets/brand/kamil-main-hero.jpg" alt="Kamil Mikołajczyk w biznesowym portrecie" />
+    <img src="assets/brand/kamil-main-hero-20260622.png" alt="Kamil Mikołajczyk w biznesowym portrecie" />
   </div>
 </section>
 
@@ -936,7 +952,7 @@
     <span class="tool-badge">Codex</span>
     <span class="tool-badge">AI Studio</span>
     <span class="tool-badge">Trae</span>
-    <span class="tool-badge">Last commit: Add Matix v3 and version slider</span>
+    <span class="tool-badge">Last commit: Fix Matix version navigation and previews</span>
   </div>
 </footer>
 
@@ -985,7 +1001,7 @@
     { meta: 'projects/tirfix/meta.json', slug: 'tirfix', browserLabel: 'Mobilny Serwis', previewImage: 'assets/previews/tirfix.grafika.png', previewPosition: 'center top' },
     { meta: 'projects/teurgium/meta.json', slug: 'teurgium', browserLabel: 'Teurgium', previewImage: 'assets/previews/teurgium.grafika.png', previewPosition: 'center top' },
     { meta: 'projects/bikeon/meta.json', slug: 'bikeon', browserLabel: 'Serwis Rowerowy', previewImage: '', previewPosition: 'center top' },
-    { meta: 'projects/matix/meta.json', slug: 'matix', browserLabel: 'Matix Bike', previewImage: 'assets/previews/matix.grafika.png', previewPosition: 'center top' },
+    { meta: 'projects/matix/meta.json', slug: 'matix', browserLabel: 'Matix Bike', previewImage: 'assets/previews/matix-v1.png', previewPosition: 'center center', previewVersions: { 'index.html': 'assets/previews/matix-v1.png', 'v2.html': 'assets/previews/matix-v2.png', 'v3.html': 'assets/previews/matix-v3.png' } },
     { meta: 'projects/serwis-samochodowy/meta.json', slug: 'serwis-samochodowy', browserLabel: 'twój-mechanik.pl', previewImage: '', previewPosition: 'center top' },
     { meta: 'projects/auto-v1/meta.json', slug: 'auto-v1', browserLabel: 'auto-serwisy.pl', previewImage: '', previewPosition: 'center top' },
     { meta: '', slug: 'kancelaria', browserLabel: 'Kancelaria', previewImage: 'assets/previews/kancelaria.grafika.png', previewPosition: 'center top', external: true, metaData: { id: 'kancelaria', title: 'Kancelaria Jowita Tomczak', industry: 'Prawo', category: 'usługi', description: 'Radca prawny — profesjonalna strona z listą specjalizacji i formularzem. Jasna paleta budująca zaufanie.', tools: 'HTML - CSS', timeToDeliver: '5 dni', previewUrl: '', liveUrl: 'https://kancelaria-jtomczak.pl', featured: false, colorAccent: '#D9A72F', colorBg: '#16213F', tags: ['HTML', 'Prawo', 'Minimalizm'], dateAdded: '2026-06' } }
@@ -1133,7 +1149,7 @@
     const featured = project.featured ? ' featured' : '';
     const versions = project.versions.length > 1 ? `<div class="version-links">${project.versions.map((version, index) => `<a class="version-link" href="${escapeHtml(versionHref(project, version))}">v${index + 1}</a>`).join('')}</div>` : '';
     const tags = project.tags.slice(0, 3).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
-    const preview = renderPreview(project);
+    const preview = renderPreview(project, project.versions[0], 0);
 
     return `<article class="card${featured}" data-id="${escapeHtml(project.id)}" data-category="${escapeHtml(project.category)}" style="--project-accent:${escapeHtml(project.colorAccent || '#3B82F6')};--project-bg:${escapeHtml(project.colorBg || '#111827')};">
       ${preview}
@@ -1152,8 +1168,14 @@
     </article>`;
   }
 
-  function renderPreview(project) {
-    const image = project.previewImage ? `<img class="preview-img" src="${escapeHtml(project.previewImage)}" alt="Podgląd projektu ${escapeHtml(project.title)}" loading="lazy" decoding="async" style="object-position:${escapeHtml(project.previewPosition || 'center top')};">` : renderMock(project);
+  function previewImageForVersion(project, version) {
+    return project.previewVersions?.[version] || project.previewImage || '';
+  }
+
+  function renderPreview(project, version = project.versions?.[0] || 'index.html', index = 0) {
+    const previewImage = previewImageForVersion(project, version);
+    const label = project.versions?.length > 1 ? `<span class="preview-version-label">${versionLabel(index)}</span>` : '';
+    const image = previewImage ? `<img class="preview-img" src="${escapeHtml(previewImage)}" alt="Podgląd projektu ${escapeHtml(project.title)} ${versionLabel(index)}" loading="lazy" decoding="async" style="object-position:${escapeHtml(project.previewPosition || 'center top')};">${label}` : `${renderMock(project)}${label}`;
     return `<div class="card-preview">
       <div class="preview-frame">
         <div class="browser-bar"><div class="browser-dot d-red"></div><div class="browser-dot d-yellow"></div><div class="browser-dot d-green"></div><div class="browser-url">${escapeHtml(project.browserLabel || project.title)}</div></div>
@@ -1187,7 +1209,7 @@
     document.getElementById('modal-time').textContent = project.timeToDeliver || '';
     document.getElementById('modal-category').textContent = CATEGORY_LABELS[project.category] || project.category || '';
     document.getElementById('modal-date').textContent = project.dateAdded || 'aktualizacja bieżąca';
-    modalPreview.innerHTML = renderPreview(project);
+    modalPreview.innerHTML = renderPreview(project, project.versions[0], 0);
     modalPreview.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
     modalPreview.style.setProperty('--project-bg', project.colorBg || '#111827');
     modalTags.innerHTML = project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
@@ -1216,6 +1238,7 @@
 
   function setModalVersion(project, version, index) {
     const href = project.external ? project.liveUrl : versionHref(project, version || 'index.html');
+    modalPreview.innerHTML = renderPreview(project, version || 'index.html', index);
     modalLink.href = href || '#';
     modalLink.target = project.external ? '_blank' : '';
     modalLink.rel = project.external ? 'noopener noreferrer' : '';

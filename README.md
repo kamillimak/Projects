@@ -88,6 +88,13 @@ Zasady:
 - `index.html` jest wersją domyślną.
 - `v2.html`, `v3.html` dodawaj tylko, jeśli są realnymi wariantami.
 - Każda wersja musi zawierać belkę lub link powrotu do portfolio.
+- Po dodaniu nowej wersji do istniejącego projektu zaktualizuj `versions` w `meta.json`, a potem uruchom:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\sync-project-version-bars.ps1 -Slug [slug] -ProjectTitle "Nazwa projektu"
+```
+
+Ten krok synchronizuje belki powrotu i linki `v1`, `v2`, `v3` we wszystkich plikach projektu, więc starsze wersje nie zostają bez linku do nowej wersji.
 - Assety specyficzne dla projektu trzymaj w `projects/[slug]/assets/`.
 - Wspólne grafiki portfolio trzymaj w `assets/previews/` albo `assets/brand/`.
 
@@ -587,6 +594,12 @@ Sprawdź `versions` w `meta.json`:
 
 Każdy plik musi istnieć.
 
+Jeśli wersje istnieją, ale belka na stronie projektu nie pokazuje wszystkich linków, uruchom synchronizację:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\sync-project-version-bars.ps1 -Slug [slug] -ProjectTitle "Nazwa projektu"
+```
+
 ### GitHub Pages pokazuje starą wersję
 
 Możliwe przyczyny:
@@ -643,4 +656,3 @@ git push origin main
 - Grafika preview jest opcjonalna, bo portfolio potrafi wygenerować placeholder.
 - Każda realizacja musi mieć kompletną nawigację powrotu.
 - Przed pushem zawsze uruchamiaj walidator.
-
