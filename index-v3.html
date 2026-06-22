@@ -58,13 +58,10 @@
       gap: 0.6rem;
     }
     .nav-logo img {
-      width: 118px;
-      height: 34px;
-      border-radius: 6px;
+      width: 72px;
+      height: 36px;
       object-fit: contain;
-      padding: 3px 9px;
-      background: #fff;
-      border: 1px solid rgba(255,255,255,.18);
+      display: block;
     }
     .nav-logo span { color: var(--accent); }
     nav a {
@@ -75,7 +72,19 @@
       transition: color 0.2s;
     }
     nav a:hover { color: var(--text); }
-    .nav-links { display: flex; gap: 2rem; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-toggle {
+      display: none;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+    }
     .nav-cta {
       background: var(--accent);
       color: #fff !important;
@@ -623,6 +632,12 @@
       letter-spacing: -0.03em; margin-bottom: 0.5rem;
     }
     .contact-text p { color: var(--muted); font-size: 0.9rem; }
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
     .contact-email {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.9rem; font-weight: 600;
@@ -659,13 +674,31 @@
     }
 
     @media (max-width: 640px) {
-      .nav-links { display: none; }
+      nav { padding: 0 1rem; }
+      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .nav-links {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.75rem 1rem 1rem;
+        background: rgba(13,13,13,0.96);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.75rem 0; }
+      .nav-cta { text-align: center; margin-top: 0.5rem; }
       .hero { grid-template-columns: 1fr; padding-top: 6rem; }
       .hero-logo { width: 158px; }
       .hero-portrait { min-height: 430px; }
       .projects-grid { grid-template-columns: 1fr; }
       .card.featured { grid-template-columns: 1fr; }
       .contact { flex-direction: column; }
+      .contact-actions { width: 100%; justify-content: flex-start; }
     }
   </style>
 </head>
@@ -673,14 +706,16 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo"><img src="assets/brand/logo-km.png" alt="Logo Kamil Mikołajczyk" /><span>Portfolio</span></a>
-  <div class="nav-links">
+  <a href="#" class="nav-logo"><img src="assets/brand/km-sygnet-transparent.png" alt="Logo Kamil Mikołajczyk" /><span>Portfolio</span></a>
+  <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Otwórz menu" aria-expanded="false">☰</button>
+  <div class="nav-links" id="nav-links">
     <a href="#projects">Projekty</a>
     <a href="#process">Proces</a>
     <a href="index-v2.html">Wersja 2</a>
     <a href="index.html">Wersja 1</a>
     <a href="#contact">Kontakt</a>
-    <a href="mailto:kamil@futureit.pl" class="nav-cta">Zamów stronę →</a>
+    <a href="tel:+48577539333">+48 577-539-333</a>
+    <a href="mailto:mikolajczykamil@gmail.com" class="nav-cta">Napisz →</a>
   </div>
 </nav>
 
@@ -746,7 +781,7 @@
           <div class="browser-dot d-red"></div>
           <div class="browser-dot d-yellow"></div>
           <div class="browser-dot d-green"></div>
-          <div class="browser-url">ams-bronowicki.pl</div>
+          <div class="browser-url">Moto Komis</div>
         </div>
         <div class="page-mock" style="background:#0a1628;">
           <div class="mock-hero-bar" style="background:linear-gradient(90deg,#1e3a5f,#2563EB44);"></div>
@@ -789,7 +824,7 @@
           <div class="browser-dot d-red"></div>
           <div class="browser-dot d-yellow"></div>
           <div class="browser-dot d-green"></div>
-          <div class="browser-url">rakowski-auto.pl</div>
+          <div class="browser-url">Skup Aut</div>
         </div>
         <div class="page-mock" style="background:#1a1209;">
           <div class="mock-hero-bar" style="background:linear-gradient(90deg,#3d2800,#f59e0b44);"></div>
@@ -832,7 +867,7 @@
           <div class="browser-dot d-red"></div>
           <div class="browser-dot d-yellow"></div>
           <div class="browser-dot d-green"></div>
-          <div class="browser-url">tirfix.pl</div>
+          <div class="browser-url">Mobilny Serwis</div>
         </div>
         <div class="page-mock" style="background:#0f0f0f;padding:0;overflow:hidden;">
           <img src="assets/previews/tirfix.grafika.png" alt="Podgląd projektu TIRFIX" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
@@ -900,7 +935,7 @@
           <div class="browser-dot d-red"></div>
           <div class="browser-dot d-yellow"></div>
           <div class="browser-dot d-green"></div>
-          <div class="browser-url">bikeon.pl</div>
+          <div class="browser-url">Serwis Rowerowy</div>
         </div>
         <div class="page-mock" style="background:#0a0f1a;">
           <div class="mock-hero-bar" style="background:linear-gradient(90deg,#0c1829,#f97316aa);"></div>
@@ -946,7 +981,7 @@
           <div class="browser-dot d-red"></div>
           <div class="browser-dot d-yellow"></div>
           <div class="browser-dot d-green"></div>
-          <div class="browser-url">projects/matix</div>
+          <div class="browser-url">Matix Bike</div>
         </div>
         <div class="page-mock" style="padding:0;background:#0a0a0a;">
           <img src="assets/previews/matix.grafika.png" alt="Podgląd projektu MATIX Bike" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
@@ -982,7 +1017,7 @@
           <div class="browser-dot d-red"></div>
           <div class="browser-dot d-yellow"></div>
           <div class="browser-dot d-green"></div>
-          <div class="browser-url">kancelaria-jtomczak.pl</div>
+          <div class="browser-url">Kancelaria</div>
         </div>
         <div class="page-mock" style="padding:0;background:#16213f;overflow:hidden;">
           <img src="assets/previews/kancelaria.grafika.png" alt="Podgląd strony kancelaria-jtomczak.pl" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
@@ -1037,7 +1072,10 @@
     <h2>Zainteresowany?</h2>
     <p>Przygotowuję bezpłatną wizualizację dla Twojej firmy.<br/>Bez zobowiązań — najpierw widzisz, potem decydujesz.</p>
   </div>
-  <a href="mailto:kamil@futureit.pl" class="contact-email">Napisz do mnie →</a>
+  <div class="contact-actions">
+    <a href="tel:+48577539333" class="contact-email">+48 577-539-333</a>
+    <a href="mailto:mikolajczykamil@gmail.com" class="contact-email">mikolajczykamil@gmail.com</a>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -1079,12 +1117,32 @@
     <div class="modal-versions" id="modal-versions"></div>
     <div class="modal-actions">
       <a href="#" class="btn-primary" id="modal-link">Zobacz projekt →</a>
-      <a href="mailto:kamil@futureit.pl" class="btn-ghost">Zamów podobny</a>
+      <a href="mailto:mikolajczykamil@gmail.com" class="btn-ghost">Zamów podobny</a>
     </div>
   </div>
 </div>
 
 <script>
+  // ─── MENU ───
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      navToggle.textContent = isOpen ? '×' : '☰';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.textContent = '☰';
+      });
+    });
+  }
+
   // ─── FILTER ───
   const filterBtns = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.card');
