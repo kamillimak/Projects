@@ -301,24 +301,51 @@
       position: relative;
       opacity: 0;
       transform: translateY(18px);
+      --project-accent: var(--accent);
+      --project-bg: var(--card);
     }
     .card.is-visible { opacity: 1; transform: translateY(0); }
-    .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .card:hover {
+      border-color: var(--project-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.26), 0 0 0 1px color-mix(in srgb, var(--project-accent), transparent 68%);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--project-accent), transparent);
+      opacity: 0.85;
+      z-index: 3;
+    }
 
     /* PREVIEW WINDOW */
     .card-preview {
       position: relative;
       height: 220px;
       overflow: hidden;
-      background: var(--card);
+      background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--project-accent), transparent 78%), transparent 34%), var(--project-bg);
+      padding: 14px;
+    }
+    .preview-frame {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--project-accent), transparent 64%);
+      border-radius: 8px;
+      background: #0f1115;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.28);
     }
     /* Fake browser chrome */
     .browser-bar {
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 28px;
-      background: #252525;
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
       padding: 0 10px;
@@ -333,7 +360,7 @@
     .d-green { background: #27C93F; }
     .browser-url {
       margin-left: 10px;
-      background: var(--border);
+      background: rgba(0,0,0,0.22);
       border-radius: 4px;
       padding: 1px 10px;
       font-size: 0.6rem;
@@ -351,6 +378,60 @@
       padding: 12px;
       overflow: hidden;
     }
+    .preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.01);
+      transition: transform 0.45s ease, filter 0.45s ease;
+    }
+    .card:hover .preview-img { transform: scale(1.045); filter: saturate(1.08) contrast(1.04); }
+    .generated-preview {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--project-accent), transparent 74%), transparent 48%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 34px),
+        var(--project-bg);
+    }
+    .generated-preview h3 {
+      max-width: 78%;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+    .generated-preview p {
+      width: fit-content;
+      max-width: 90%;
+      padding: 0.28rem 0.55rem;
+      border: 1px solid color-mix(in srgb, var(--project-accent), transparent 45%);
+      border-radius: 4px;
+      color: color-mix(in srgb, var(--project-accent), #fff 32%);
+      background: rgba(0,0,0,0.24);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .generated-lines {
+      display: grid;
+      gap: 7px;
+      width: 72%;
+    }
+    .generated-lines span {
+      display: block;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+    }
+    .generated-lines span:nth-child(2) { width: 74%; }
+    .generated-lines span:nth-child(3) { width: 52%; background: color-mix(in srgb, var(--project-accent), transparent 40%); }
     .mock-hero-bar {
       height: 52px;
       border-radius: 6px;
@@ -425,8 +506,8 @@
     .tag {
       font-size: 0.68rem;
       padding: 0.2rem 0.55rem;
-      background: var(--tag-bg);
-      color: var(--muted);
+      background: color-mix(in srgb, var(--project-accent), transparent 88%);
+      color: color-mix(in srgb, var(--project-accent), #fff 22%);
       border-radius: 4px;
       font-weight: 500;
     }
@@ -441,8 +522,8 @@
       flex-shrink: 0;
     }
     .card:hover .card-arrow {
-      border-color: var(--accent);
-      color: var(--accent);
+      border-color: var(--project-accent);
+      color: var(--project-accent);
     }
 
     /* ─── FEATURED CARD (wide) ─── */
@@ -497,15 +578,16 @@
     }
     .modal-close:hover { color: var(--text); }
     .modal-preview {
-      height: 230px;
+      height: clamp(260px, 44vh, 430px);
       margin: 0 0 1.5rem;
-      border: 1px solid var(--border);
+      border: 1px solid color-mix(in srgb, var(--project-accent, var(--accent)), transparent 64%);
       border-radius: 12px;
       overflow: hidden;
       background: var(--card);
     }
     .modal-preview .card-preview {
       height: 100%;
+      padding: 18px;
     }
     .modal-preview .page-mock {
       bottom: 0;
@@ -1014,7 +1096,7 @@
     const tags = project.tags.slice(0, 3).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
     const preview = renderPreview(project);
 
-    return `<article class="card${featured}" data-id="${escapeHtml(project.id)}" data-category="${escapeHtml(project.category)}">
+    return `<article class="card${featured}" data-id="${escapeHtml(project.id)}" data-category="${escapeHtml(project.category)}" style="--project-accent:${escapeHtml(project.colorAccent || '#3B82F6')};--project-bg:${escapeHtml(project.colorBg || '#111827')};">
       ${preview}
       <div class="card-body">
         <p class="card-industry">${escapeHtml(project.industry || CATEGORY_LABELS[project.category] || project.category)}</p>
@@ -1032,19 +1114,22 @@
   }
 
   function renderPreview(project) {
-    const image = project.previewImage ? `<img src="${escapeHtml(project.previewImage)}" alt="Podgląd projektu ${escapeHtml(project.title)}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(project.previewPosition || 'center top')};display:block;">` : renderMock(project);
+    const image = project.previewImage ? `<img class="preview-img" src="${escapeHtml(project.previewImage)}" alt="Podgląd projektu ${escapeHtml(project.title)}" loading="lazy" decoding="async" style="object-position:${escapeHtml(project.previewPosition || 'center top')};">` : renderMock(project);
     return `<div class="card-preview">
-      <div class="browser-bar"><div class="browser-dot d-red"></div><div class="browser-dot d-yellow"></div><div class="browser-dot d-green"></div><div class="browser-url">${escapeHtml(project.browserLabel || project.title)}</div></div>
-      <div class="page-mock" style="padding:${project.previewImage ? '0' : '12px'};background:${escapeHtml(project.colorBg || '#111827')};overflow:hidden;">${image}</div>
+      <div class="preview-frame">
+        <div class="browser-bar"><div class="browser-dot d-red"></div><div class="browser-dot d-yellow"></div><div class="browser-dot d-green"></div><div class="browser-url">${escapeHtml(project.browserLabel || project.title)}</div></div>
+        <div class="page-mock" style="padding:0;background:${escapeHtml(project.colorBg || '#111827')};overflow:hidden;">${image}</div>
+      </div>
     </div>`;
   }
 
   function renderMock(project) {
-    const mock = FALLBACK_MOCKS[project.slug] || FALLBACK_MOCKS.default;
-    return `<div style="height:100%;background:${mock.bg};padding:12px;">
-      <div class="mock-hero-bar" style="background:${mock.hero};"></div>
-      <div class="mock-row">${mock.blocks.map(color => `<div class="mock-block" style="height:58px;background:${color};"></div>`).join('')}</div>
-      <div class="mock-row"><div class="mock-block" style="height:38px;background:${escapeHtml(project.colorAccent || '#3B82F6')}33;"></div></div>
+    return `<div class="generated-preview">
+      <div>
+        <p>${escapeHtml(CATEGORY_LABELS[project.category] || project.category || 'Projekt')}</p>
+        <h3>${escapeHtml(project.title)}</h3>
+      </div>
+      <div class="generated-lines"><span></span><span></span><span></span></div>
     </div>`;
   }
 
@@ -1065,6 +1150,7 @@
     document.getElementById('modal-date').textContent = project.dateAdded || 'aktualizacja bieżąca';
     modalPreview.innerHTML = renderPreview(project);
     modalPreview.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
+    modalPreview.style.setProperty('--project-bg', project.colorBg || '#111827');
     modalTags.innerHTML = project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
     modalVersions.innerHTML = '';
 
