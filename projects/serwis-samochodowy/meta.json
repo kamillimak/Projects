@@ -1,0 +1,17 @@
+{
+  "id": "serwis-samochodowy",
+  "title": "Twój Mechanik Wojkowice",
+  "industry": "Serwis samochodowy",
+  "category": "automotive",
+  "description": "Strona dla serwisu samochodowego z ofertą napraw, diagnostyką, opiniami, mapą i kontaktem.",
+  "tools": "React - Vite - Tailwind - Motion",
+  "timeToDeliver": "5 dni",
+  "previewUrl": "https://kamillimak.github.io/Projects/projects/serwis-samochodowy/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#F97316",
+  "colorBg": "#111827",
+  "tags": ["React", "Vite", "Automotive"],
+  "dateAdded": "2026-06",
+  "versions": ["index.html"]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "auto-v1",
+  "title": "Serwisy Samochodowe Kraków",
+  "industry": "Strony dla serwisów samochodowych",
+  "category": "automotive",
+  "description": "Aplikacja prezentująca kilka serwisów samochodowych z mapami, opiniami i interaktywnymi sekcjami.",
+  "tools": "React - Vite - Tailwind - Motion",
+  "timeToDeliver": "5 dni",
+  "previewUrl": "https://kamillimak.github.io/Projects/projects/auto-v1/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#2563EB",
+  "colorBg": "#0F172A",
+  "tags": ["React", "Vite", "Automotive"],
+  "dateAdded": "2026-06",
+  "versions": ["index.html"]
+}
