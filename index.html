@@ -246,11 +246,26 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
     .filter-btn:hover, .filter-btn.active {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
+    }
+    .filter-btn span {
+      min-width: 1.35rem;
+      height: 1.35rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: inherit;
+      font-size: 0.68rem;
+      font-weight: 700;
     }
 
     /* ─── GRID ─── */
@@ -262,6 +277,18 @@
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.25rem;
     }
+    .projects-grid.is-loading {
+      display: block;
+    }
+    .render-status {
+      grid-column: 1 / -1;
+      padding: 2rem;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+      text-align: center;
+    }
 
     /* ─── CARD ─── */
     .card {
@@ -270,9 +297,12 @@
       border-radius: 12px;
       overflow: hidden;
       cursor: pointer;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.2s, transform 0.2s, opacity 0.35s;
       position: relative;
+      opacity: 0;
+      transform: translateY(18px);
     }
+    .card.is-visible { opacity: 1; transform: translateY(0); }
     .card:hover { border-color: var(--accent); transform: translateY(-3px); }
 
     /* PREVIEW WINDOW */
@@ -443,12 +473,14 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      max-width: 640px;
+      max-width: 760px;
       width: 100%;
       padding: 2rem;
       transform: translateY(12px);
       transition: transform 0.2s;
       position: relative;
+      max-height: min(90vh, 820px);
+      overflow: auto;
     }
     .modal-overlay.open .modal { transform: translateY(0); }
     .modal-close {
@@ -464,6 +496,20 @@
       display: flex; align-items: center; justify-content: center;
     }
     .modal-close:hover { color: var(--text); }
+    .modal-preview {
+      height: 230px;
+      margin: 0 0 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--card);
+    }
+    .modal-preview .card-preview {
+      height: 100%;
+    }
+    .modal-preview .page-mock {
+      bottom: 0;
+    }
     .modal-industry {
       font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
@@ -485,7 +531,12 @@
     .meta-label { font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
     .meta-val { font-size: 0.875rem; color: var(--text); }
     .modal-tags { display: flex; gap: 0.375rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
-    .modal-actions { display: flex; gap: 0.75rem; }
+    .modal-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .modal-cta-note {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin: -0.75rem 0 1rem;
+    }
     .modal-versions {
       display: none;
       align-items: center;
@@ -708,283 +759,11 @@
   </div>
 
   <!-- FILTER -->
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">Wszystkie</button>
-    <button class="filter-btn" data-filter="automotive">Motoryzacja</button>
-    <button class="filter-btn" data-filter="serwis">Serwis</button>
-    <button class="filter-btn" data-filter="usługi">Usługi</button>
-    <button class="filter-btn" data-filter="inne">Inne</button>
-  </div>
+  <div class="filter-bar" id="filter-bar" aria-label="Filtry projektów"></div>
 
   <!-- GRID -->
-  <div class="projects-grid" id="projects-grid">
-
-    <!-- FEATURED: AutoMechanik -->
-    <div class="card featured" data-category="automotive"
-         data-title="AutoMechanik"
-         data-industry="Moto-komis"
-         data-desc="Moto-komis z Żórawiny. Strona z integracją Google Maps, galerią pojazdów i formularzem kontaktowym. Projekt przygotowany jako wizualizacja przed podjęciem decyzji."
-         data-tools="HTML · CSS · Google Maps API"
-         data-time="4 dni"
-         data-preview="projects/ams-bronowicki/index.html">
-      <div class="card-preview">
-        <div class="browser-bar">
-          <div class="browser-dot d-red"></div>
-          <div class="browser-dot d-yellow"></div>
-          <div class="browser-dot d-green"></div>
-          <div class="browser-url">Moto Komis</div>
-        </div>
-        <div class="page-mock" style="background:#0a1628;">
-          <div class="mock-hero-bar" style="background:linear-gradient(90deg,#1e3a5f,#2563EB44);"></div>
-          <div class="mock-row">
-            <div class="mock-block" style="height:80px;background:#112240;border-radius:6px;"></div>
-            <div class="mock-block" style="height:80px;background:#0d1f3c;border-radius:6px;"></div>
-            <div class="mock-block" style="height:80px;background:#112240;border-radius:6px;"></div>
-          </div>
-          <div class="mock-row">
-            <div class="mock-block" style="height:40px;background:#1a2f50;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body" style="display:flex;flex-direction:column;justify-content:center;">
-        <p class="card-industry">Moto-komis</p>
-        <h2 class="card-title" style="font-size:1.25rem;">AutoMechanik</h2>
-        <p class="card-desc">Kompletna strona dla moto-komisu z Google Maps Embed, galerią i formularzem. Wizualizacja dostarczona przed decyzją klienta.</p>
-        <div class="card-footer">
-          <div class="tags">
-            <span class="tag">HTML</span>
-            <span class="tag">Google Maps</span>
-            <span class="tag">Żórawina</span>
-          </div>
-          <div class="card-arrow">→</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AutoJack -->
-    <div class="card" data-category="automotive"
-         data-title="AutoJack"
-         data-industry="Skup aut"
-         data-desc="Strona dla skupu samochodów. Minimalistyczny design z wyeksponowanymi danymi kontaktowymi i mapą dojazdu."
-         data-tools="HTML · CSS · Google Maps API"
-         data-time="3 dni"
-         data-versions="v1|projects/jacek-rakowski/index.html,v2|projects/jacek-rakowski/v2.html"
-         data-preview="projects/jacek-rakowski/index.html">
-      <div class="card-preview">
-        <div class="browser-bar">
-          <div class="browser-dot d-red"></div>
-          <div class="browser-dot d-yellow"></div>
-          <div class="browser-dot d-green"></div>
-          <div class="browser-url">Skup Aut</div>
-        </div>
-        <div class="page-mock" style="background:#1a1209;">
-          <div class="mock-hero-bar" style="background:linear-gradient(90deg,#3d2800,#f59e0b44);"></div>
-          <div class="mock-row">
-            <div class="mock-block" style="height:50px;background:#2d1e00;"></div>
-            <div class="mock-block" style="height:50px;background:#3d2800;max-width:90px;"></div>
-          </div>
-          <div class="mock-row">
-            <div class="mock-block" style="height:65px;background:#2a1c00;border-radius:4px;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-industry">Skup aut</p>
-        <div class="card-title-row">
-          <h2 class="card-title">AutoJack</h2>
-          <div class="version-links">
-            <a class="version-link" href="projects/jacek-rakowski/index.html">v1</a>
-            <a class="version-link" href="projects/jacek-rakowski/v2.html">v2</a>
-          </div>
-        </div>
-        <p class="card-desc">Skup i sprzedaż aut. Strona z naciskiem na szybki kontakt i wiarygodność lokalnej firmy.</p>
-        <div class="card-footer">
-          <div class="tags"><span class="tag">HTML</span><span class="tag">Automotive</span></div>
-          <div class="card-arrow">→</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TIRFIX -->
-    <div class="card" data-category="serwis"
-         data-title="TIRFIX"
-         data-industry="Serwis TIR"
-         data-desc="Mobilny serwis ciężarówek. Strona z podkreśleniem dostępności 24/7, zasięgiem geograficznym i listą usług. Redesign istniejącej wizytówki."
-         data-tools="HTML · CSS · Animacje CSS"
-         data-time="5 dni"
-         data-preview="projects/tirfix/index.html">
-      <div class="card-preview">
-        <div class="browser-bar">
-          <div class="browser-dot d-red"></div>
-          <div class="browser-dot d-yellow"></div>
-          <div class="browser-dot d-green"></div>
-          <div class="browser-url">Mobilny Serwis</div>
-        </div>
-        <div class="page-mock" style="background:#0f0f0f;padding:0;overflow:hidden;">
-          <img src="assets/previews/tirfix.grafika.png" alt="Podgląd projektu TIRFIX" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-industry">Serwis TIR · 24/7</p>
-        <h2 class="card-title">TIRFIX</h2>
-        <p class="card-desc">Mobilna pomoc drogowa dla ciężarówek. Ciemny, techniczny design z wyeksponowaną dostępnością całą dobę.</p>
-        <div class="card-footer">
-          <div class="tags"><span class="tag">HTML</span><span class="tag">Redesign</span></div>
-          <div class="card-arrow">→</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Teurgium -->
-    <div class="card" data-category="usługi"
-         data-title="Teurgium Tarasy i Ogrody"
-         data-industry="Tarasy i ogrody premium"
-         data-desc="Interaktywny prototyp firmy realizującej tarasy, ogrody i podjazdy premium, osadzony jako projekt Claude Artifact."
-         data-tools="Claude Artifact · React"
-         data-time="4 dni"
-         data-versions="v1|projects/teurgium/index.html,v2|projects/teurgium/v2.html"
-         data-preview="projects/teurgium/index.html">
-      <div class="card-preview">
-        <div class="browser-bar">
-          <div class="browser-dot d-red"></div>
-          <div class="browser-dot d-yellow"></div>
-          <div class="browser-dot d-green"></div>
-          <div class="browser-url">Teurgium</div>
-        </div>
-        <div class="page-mock" style="padding:0;background:#151811;overflow:hidden;">
-          <img src="assets/previews/teurgium.grafika.png" alt="Podgląd projektu Teurgium" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-industry">Tarasy i ogrody premium</p>
-        <div class="card-title-row">
-          <h2 class="card-title">Teurgium Tarasy i Ogrody</h2>
-          <div class="version-links">
-            <a class="version-link" href="projects/teurgium/index.html">v1</a>
-            <a class="version-link" href="projects/teurgium/v2.html">v2</a>
-          </div>
-        </div>
-        <p class="card-desc">Interaktywny prototyp oferty tarasów, ogrodów i podjazdów premium.</p>
-        <div class="card-footer">
-          <div class="tags"><span class="tag">Claude</span><span class="tag">React</span><span class="tag">Ogrody</span></div>
-          <div class="card-arrow">→</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Rowerkowo -->
-    <div class="card" data-category="serwis"
-         data-title="Rowerkowo"
-         data-industry="Serwis rowerowy"
-         data-desc="Serwis rowerowy Rowerkowo — strona z cennikiem usług, informacjami o terminach i formularzem zgłoszeń. Energetyczna paleta kolorów."
-         data-tools="HTML · CSS · animacje"
-         data-time="3 dni"
-         data-versions="v1|projects/bikeon/index.html,v2|projects/bikeon/v2.html"
-         data-preview="projects/bikeon/index.html">
-      <div class="card-preview">
-        <div class="browser-bar">
-          <div class="browser-dot d-red"></div>
-          <div class="browser-dot d-yellow"></div>
-          <div class="browser-dot d-green"></div>
-          <div class="browser-url">Serwis Rowerowy</div>
-        </div>
-        <div class="page-mock" style="background:#0a0f1a;">
-          <div class="mock-hero-bar" style="background:linear-gradient(90deg,#0c1829,#f97316aa);"></div>
-          <div class="mock-row">
-            <div class="mock-block" style="height:42px;background:#111827;"></div>
-            <div class="mock-block" style="height:42px;background:#f9731620;border:1px solid #f9731640;max-width:70px;border-radius:4px;"></div>
-          </div>
-          <div class="mock-row" style="gap:4px;">
-            <div class="mock-block" style="height:30px;background:#111827;border-radius:3px;"></div>
-            <div class="mock-block" style="height:30px;background:#111827;border-radius:3px;"></div>
-            <div class="mock-block" style="height:30px;background:#111827;border-radius:3px;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-industry">Serwis rowerowy</p>
-        <div class="card-title-row">
-          <h2 class="card-title">Rowerkowo</h2>
-          <div class="version-links">
-            <a class="version-link" href="projects/bikeon/index.html">v1</a>
-            <a class="version-link" href="projects/bikeon/v2.html">v2</a>
-          </div>
-        </div>
-        <p class="card-desc">Serwis rowerowy z cennikiem i formularzem. Pomarańczowy akcent, sportowy charakter, czytelna oferta.</p>
-        <div class="card-footer">
-          <div class="tags"><span class="tag">HTML</span><span class="tag">Sport</span></div>
-          <div class="card-arrow">→</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MATIX Bike -->
-    <div class="card" data-category="inne"
-         data-title="MATIX Bike"
-         data-industry="Rowery trójkołowe premium"
-         data-desc="Strona produktowa dla producenta rowerów trójkołowych MATIX. Segmentacja modeli, wersje elektryczne, oferta rehabilitacyjna i proces zakupu."
-         data-tools="HTML · CSS · JavaScript"
-         data-time="4 dni"
-         data-versions="v1|projects/matix/index.html,v2|projects/matix/v2.html"
-         data-preview="projects/matix/index.html">
-      <div class="card-preview">
-        <div class="browser-bar">
-          <div class="browser-dot d-red"></div>
-          <div class="browser-dot d-yellow"></div>
-          <div class="browser-dot d-green"></div>
-          <div class="browser-url">Matix Bike</div>
-        </div>
-        <div class="page-mock" style="padding:0;background:#0a0a0a;">
-          <img src="assets/previews/matix.grafika.png" alt="Podgląd projektu MATIX Bike" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-industry">Producent rowerów</p>
-        <div class="card-title-row">
-          <h2 class="card-title">MATIX Bike</h2>
-          <div class="version-links">
-            <a class="version-link" href="projects/matix/index.html">v1</a>
-            <a class="version-link" href="projects/matix/v2.html">v2</a>
-          </div>
-        </div>
-        <p class="card-desc">Produktowa strona dla rowerów trójkołowych premium, z modelami FAT, TURIST, LONG i wersjami elektrycznymi.</p>
-        <div class="card-footer">
-          <div class="tags"><span class="tag">HTML</span><span class="tag">Produkt</span><span class="tag">Rowery</span></div>
-          <div class="card-arrow">→</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Kancelaria -->
-    <div class="card" data-category="usługi"
-         data-title="Kancelaria Jowita Tomczak"
-         data-industry="Prawo"
-         data-desc="Strona dla Kancelarii Radcy Prawnego Jowitę Tomczak. Elegancki minimalizm, sekcja specjalizacji, formularz kontaktowy z obszarami prawa."
-         data-tools="HTML · CSS"
-         data-time="5 dni"
-         data-url="https://kancelaria-jtomczak.pl">
-      <div class="card-preview">
-        <div class="browser-bar">
-          <div class="browser-dot d-red"></div>
-          <div class="browser-dot d-yellow"></div>
-          <div class="browser-dot d-green"></div>
-          <div class="browser-url">Kancelaria</div>
-        </div>
-        <div class="page-mock" style="padding:0;background:#16213f;overflow:hidden;">
-          <img src="assets/previews/kancelaria.grafika.png" alt="Podgląd strony kancelaria-jtomczak.pl" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-industry">Prawo</p>
-        <h2 class="card-title">Kancelaria Jowita Tomczak</h2>
-        <p class="card-desc">Radca prawny — profesjonalna strona z listą specjalizacji i formularzem. Jasna paleta budująca zaufanie.</p>
-        <div class="card-footer">
-          <div class="tags"><span class="tag">HTML</span><span class="tag">Prawo</span><span class="tag">Minimalizm</span></div>
-          <div class="card-arrow">→</div>
-        </div>
-      </div>
-    </div>
-
+  <div class="projects-grid is-loading" id="projects-grid" aria-live="polite">
+    <p class="render-status">Ładuję projekty z plików meta.json...</p>
   </div>
 </section>
 
@@ -1039,7 +818,7 @@
     <span class="tool-badge">Codex</span>
     <span class="tool-badge">AI Studio</span>
     <span class="tool-badge">Trae</span>
-    <span class="tool-badge">Last commit: Standardize navigation and anonymize projects</span>
+    <span class="tool-badge">Last commit: Add dynamic portfolio features</span>
   </div>
 </footer>
 
@@ -1048,7 +827,8 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
-    <button class="modal-close" id="modal-close">✕</button>
+    <button class="modal-close" id="modal-close" type="button" aria-label="Zamknij">✕</button>
+    <div class="modal-preview" id="modal-preview" aria-hidden="true"></div>
     <p class="modal-industry" id="modal-industry"></p>
     <h2 id="modal-title"></h2>
     <p class="modal-desc" id="modal-desc"></p>
@@ -1062,22 +842,73 @@
         <span class="meta-val" id="modal-time"></span>
       </div>
       <div class="meta-item">
-        <span class="meta-label">Typ projektu</span>
-        <span class="meta-val">Wizualizacja → Wdrożenie</span>
+        <span class="meta-label">Kategoria</span>
+        <span class="meta-val" id="modal-category"></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Dodano</span>
+        <span class="meta-val" id="modal-date"></span>
       </div>
     </div>
+    <div class="modal-tags" id="modal-tags"></div>
     <div class="modal-versions" id="modal-versions"></div>
+    <p class="modal-cta-note" id="modal-cta-note"></p>
     <div class="modal-actions">
       <a href="#" class="btn-primary" id="modal-link">Zobacz projekt →</a>
-      <a href="mailto:mikolajczykamil@gmail.com" class="btn-ghost">Zamów podobny</a>
+      <a href="mailto:mikolajczykamil@gmail.com" class="btn-ghost" id="modal-contact">Zapytaj o podobny</a>
     </div>
   </div>
 </div>
 
 <script>
-  // ─── MENU ───
+  const PROJECT_SOURCES = [
+    { meta: 'projects/ams-bronowicki/meta.json', slug: 'ams-bronowicki', browserLabel: 'Moto Komis', previewImage: '', previewPosition: 'center top' },
+    { meta: 'projects/jacek-rakowski/meta.json', slug: 'jacek-rakowski', browserLabel: 'Skup Aut', previewImage: '', previewPosition: 'center top' },
+    { meta: 'projects/tirfix/meta.json', slug: 'tirfix', browserLabel: 'Mobilny Serwis', previewImage: 'assets/previews/tirfix.grafika.png', previewPosition: 'center top' },
+    { meta: 'projects/teurgium/meta.json', slug: 'teurgium', browserLabel: 'Teurgium', previewImage: 'assets/previews/teurgium.grafika.png', previewPosition: 'center top' },
+    { meta: 'projects/bikeon/meta.json', slug: 'bikeon', browserLabel: 'Serwis Rowerowy', previewImage: '', previewPosition: 'center top' },
+    { meta: 'projects/matix/meta.json', slug: 'matix', browserLabel: 'Matix Bike', previewImage: 'assets/previews/matix.grafika.png', previewPosition: 'center top' },
+    { meta: '', slug: 'kancelaria', browserLabel: 'Kancelaria', previewImage: 'assets/previews/kancelaria.grafika.png', previewPosition: 'center top', external: true, metaData: { id: 'kancelaria', title: 'Kancelaria Jowita Tomczak', industry: 'Prawo', category: 'usługi', description: 'Radca prawny — profesjonalna strona z listą specjalizacji i formularzem. Jasna paleta budująca zaufanie.', tools: 'HTML - CSS', timeToDeliver: '5 dni', previewUrl: '', liveUrl: 'https://kancelaria-jtomczak.pl', featured: false, colorAccent: '#D9A72F', colorBg: '#16213F', tags: ['HTML', 'Prawo', 'Minimalizm'], dateAdded: '2026-06' } }
+  ];
+
+  const CATEGORY_LABELS = {
+    all: 'Wszystkie',
+    automotive: 'Motoryzacja',
+    serwis: 'Serwis',
+    usługi: 'Usługi',
+    inne: 'Inne'
+  };
+
+  const FALLBACK_MOCKS = {
+    'ams-bronowicki': { bg: '#0a1628', hero: 'linear-gradient(90deg,#1e3a5f,#2563EB44)', blocks: ['#112240', '#0d1f3c', '#112240'] },
+    'jacek-rakowski': { bg: '#1a1209', hero: 'linear-gradient(90deg,#3d2800,#f59e0b44)', blocks: ['#2d1e00', '#3d2800', '#2a1c00'] },
+    bikeon: { bg: '#0a0f1a', hero: 'linear-gradient(90deg,#0c1829,#f97316aa)', blocks: ['#111827', '#f9731620', '#111827'] },
+    default: { bg: '#111827', hero: 'linear-gradient(90deg,#1f2937,#3B82F644)', blocks: ['#1f2937', '#172033', '#263244'] }
+  };
+
   const navToggle = document.getElementById('nav-toggle');
   const navLinks = document.getElementById('nav-links');
+  const grid = document.getElementById('projects-grid');
+  const filterBar = document.getElementById('filter-bar');
+  const visibleCount = document.getElementById('visible-count');
+  const overlay = document.getElementById('modal-overlay');
+  const modalClose = document.getElementById('modal-close');
+  const modalVersions = document.getElementById('modal-versions');
+  const modalTags = document.getElementById('modal-tags');
+  const modalPreview = document.getElementById('modal-preview');
+  const modalLink = document.getElementById('modal-link');
+  const modalContact = document.getElementById('modal-contact');
+  const modalNote = document.getElementById('modal-cta-note');
+  let projects = [];
+  let currentFilter = 'all';
+
+  const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
 
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
@@ -1095,7 +926,177 @@
     });
   }
 
-  // ─── COUNTERS ───
+  const pluralProjects = count => count === 1 ? 'projekt' : count > 1 && count < 5 ? 'projekty' : 'projektów';
+  const localProjectUrl = project => `projects/${project.slug}/index.html`;
+  const normalizeTools = value => String(value || '').replace(/Â·|·/g, '-');
+  const versionHref = (project, version) => `projects/${project.slug}/${version}`;
+
+  function enhanceProject(source, meta) {
+    const versions = Array.isArray(meta.versions) && meta.versions.length ? meta.versions : ['index.html'];
+    return {
+      ...meta,
+      ...source,
+      title: meta.title || source.slug,
+      category: meta.category || 'inne',
+      tools: normalizeTools(meta.tools),
+      timeToDeliver: meta.timeToDeliver || 'do ustalenia',
+      tags: Array.isArray(meta.tags) ? meta.tags : [],
+      versions,
+      previewPath: source.external ? meta.liveUrl : localProjectUrl({ slug: source.slug }),
+      contactSubject: `Projekt podobny do ${meta.title || source.slug}`
+    };
+  }
+
+  async function loadProjects() {
+    const loaded = await Promise.all(PROJECT_SOURCES.map(async source => {
+      if (source.metaData) return enhanceProject(source, source.metaData);
+      const response = await fetch(source.meta, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Nie mogę odczytać ${source.meta}`);
+      return enhanceProject(source, await response.json());
+    }));
+
+    projects = loaded.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || a.title.localeCompare(b.title, 'pl'));
+    renderFilters();
+    renderProjects();
+    updateProjectCount();
+    observeCards();
+  }
+
+  function renderFilters() {
+    const categories = ['all', ...new Set(projects.map(project => project.category))];
+    filterBar.innerHTML = categories.map(category => {
+      const count = category === 'all' ? projects.length : projects.filter(project => project.category === category).length;
+      return `<button class="filter-btn${category === currentFilter ? ' active' : ''}" data-filter="${escapeHtml(category)}">${escapeHtml(CATEGORY_LABELS[category] || category)}<span>${count}</span></button>`;
+    }).join('');
+
+    filterBar.querySelectorAll('.filter-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        currentFilter = button.dataset.filter;
+        renderFilters();
+        renderProjects();
+        observeCards();
+      });
+    });
+  }
+
+  function renderProjects() {
+    const filtered = projects.filter(project => currentFilter === 'all' || project.category === currentFilter);
+    grid.classList.remove('is-loading');
+
+    if (!filtered.length) {
+      grid.innerHTML = '<p class="render-status">Brak projektów w tej kategorii.</p>';
+      updateProjectCount(0);
+      return;
+    }
+
+    grid.innerHTML = filtered.map(renderProjectCard).join('');
+    updateProjectCount(filtered.length);
+
+    grid.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const project = projects.find(item => item.id === card.dataset.id);
+        if (project?.external && project.liveUrl) {
+          window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+          return;
+        }
+        openProjectModal(project);
+      });
+    });
+
+    grid.querySelectorAll('.version-link').forEach(link => {
+      link.addEventListener('click', event => event.stopPropagation());
+    });
+  }
+
+  function renderProjectCard(project) {
+    const featured = project.featured ? ' featured' : '';
+    const versions = project.versions.length > 1 ? `<div class="version-links">${project.versions.map((version, index) => `<a class="version-link" href="${escapeHtml(versionHref(project, version))}">v${index + 1}</a>`).join('')}</div>` : '';
+    const tags = project.tags.slice(0, 3).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
+    const preview = renderPreview(project);
+
+    return `<article class="card${featured}" data-id="${escapeHtml(project.id)}" data-category="${escapeHtml(project.category)}">
+      ${preview}
+      <div class="card-body">
+        <p class="card-industry">${escapeHtml(project.industry || CATEGORY_LABELS[project.category] || project.category)}</p>
+        <div class="card-title-row">
+          <h2 class="card-title">${escapeHtml(project.title)}</h2>
+          ${versions}
+        </div>
+        <p class="card-desc">${escapeHtml(project.description || '')}</p>
+        <div class="card-footer">
+          <div class="tags">${tags}</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function renderPreview(project) {
+    const image = project.previewImage ? `<img src="${escapeHtml(project.previewImage)}" alt="Podgląd projektu ${escapeHtml(project.title)}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(project.previewPosition || 'center top')};display:block;">` : renderMock(project);
+    return `<div class="card-preview">
+      <div class="browser-bar"><div class="browser-dot d-red"></div><div class="browser-dot d-yellow"></div><div class="browser-dot d-green"></div><div class="browser-url">${escapeHtml(project.browserLabel || project.title)}</div></div>
+      <div class="page-mock" style="padding:${project.previewImage ? '0' : '12px'};background:${escapeHtml(project.colorBg || '#111827')};overflow:hidden;">${image}</div>
+    </div>`;
+  }
+
+  function renderMock(project) {
+    const mock = FALLBACK_MOCKS[project.slug] || FALLBACK_MOCKS.default;
+    return `<div style="height:100%;background:${mock.bg};padding:12px;">
+      <div class="mock-hero-bar" style="background:${mock.hero};"></div>
+      <div class="mock-row">${mock.blocks.map(color => `<div class="mock-block" style="height:58px;background:${color};"></div>`).join('')}</div>
+      <div class="mock-row"><div class="mock-block" style="height:38px;background:${escapeHtml(project.colorAccent || '#3B82F6')}33;"></div></div>
+    </div>`;
+  }
+
+  function updateProjectCount(count = projects.filter(project => currentFilter === 'all' || project.category === currentFilter).length) {
+    if (visibleCount) visibleCount.textContent = `${count} ${pluralProjects(count)}`;
+    const counter = document.getElementById('count-projects');
+    if (counter) counter.dataset.count = String(projects.length || Number(counter.dataset.count || 0));
+  }
+
+  function openProjectModal(project) {
+    if (!project) return;
+    document.getElementById('modal-industry').textContent = project.industry || '';
+    document.getElementById('modal-title').textContent = project.title;
+    document.getElementById('modal-desc').textContent = project.description || '';
+    document.getElementById('modal-tools').textContent = project.tools || '';
+    document.getElementById('modal-time').textContent = project.timeToDeliver || '';
+    document.getElementById('modal-category').textContent = CATEGORY_LABELS[project.category] || project.category || '';
+    document.getElementById('modal-date').textContent = project.dateAdded || 'aktualizacja bieżąca';
+    modalPreview.innerHTML = renderPreview(project);
+    modalPreview.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
+    modalTags.innerHTML = project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
+    modalVersions.innerHTML = '';
+
+    if (project.versions.length > 1) {
+      modalVersions.innerHTML = `<span class="modal-versions-label">Wersje</span>${project.versions.map((version, index) => `<a class="version-link" href="${escapeHtml(versionHref(project, version))}">v${index + 1}</a>`).join('')}`;
+      modalVersions.classList.add('visible');
+    } else {
+      modalVersions.classList.remove('visible');
+    }
+
+    const projectHref = project.external ? project.liveUrl : localProjectUrl(project);
+    modalLink.href = projectHref || '#';
+    modalLink.target = project.external ? '_blank' : '';
+    modalLink.rel = project.external ? 'noopener noreferrer' : '';
+    modalLink.style.display = projectHref ? '' : 'none';
+    modalContact.href = `mailto:mikolajczykamil@gmail.com?subject=${encodeURIComponent(project.contactSubject)}&body=${encodeURIComponent(`Cześć, interesuje mnie projekt podobny do: ${project.title}.`)}`;
+    modalNote.textContent = `CTA kontaktowe ma już ustawiony temat: „${project.contactSubject}”.`;
+    overlay.classList.add('open');
+  }
+
+  function observeCards() {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+  }
+
   const statValues = document.querySelectorAll('.stat-val[data-count]');
   const animateStat = value => {
     const target = Number(value.dataset.count || 0);
@@ -1107,8 +1108,7 @@
     const tick = now => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(target * eased);
-      value.textContent = `${prefix}${current}${suffix}`;
+      value.textContent = `${prefix}${Math.round(target * eased)}${suffix}`;
       if (progress < 1) requestAnimationFrame(tick);
     };
 
@@ -1126,89 +1126,20 @@
   const statsBar = document.querySelector('.stats-bar');
   if (statsBar) statsObserver.observe(statsBar);
 
-  // ─── FILTER ───
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.card');
-  const visibleCount = document.getElementById('visible-count');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      let count = 0;
-      cards.forEach(card => {
-        const match = filter === 'all' || card.dataset.category === filter;
-        card.style.display = match ? '' : 'none';
-        if (match) count++;
-      });
-      visibleCount.textContent = count + ' ' + (count === 1 ? 'projekt' : count < 5 ? 'projekty' : 'projektów');
-    });
-  });
-
-  // ─── MODAL ───
-  const overlay = document.getElementById('modal-overlay');
-  const modalClose = document.getElementById('modal-close');
-  const modalVersions = document.getElementById('modal-versions');
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const externalUrl = card.dataset.url;
-      if (externalUrl) {
-        const href = externalUrl.startsWith('http') ? externalUrl : `https://${externalUrl}`;
-        window.open(href, '_blank', 'noopener,noreferrer');
-        return;
-      }
-
-      document.getElementById('modal-industry').textContent = card.dataset.industry || '';
-      document.getElementById('modal-title').textContent = card.dataset.title || '';
-      document.getElementById('modal-desc').textContent = card.dataset.desc || '';
-      document.getElementById('modal-tools').textContent = card.dataset.tools || '';
-      document.getElementById('modal-time').textContent = card.dataset.time || '';
-      modalVersions.innerHTML = '';
-      if (card.dataset.versions) {
-        const label = document.createElement('span');
-        label.className = 'modal-versions-label';
-        label.textContent = 'Wersje';
-        modalVersions.appendChild(label);
-        card.dataset.versions.split(',').forEach(version => {
-          const [name, href] = version.split('|');
-          const link = document.createElement('a');
-          link.className = 'version-link';
-          link.href = href;
-          link.textContent = name;
-          modalVersions.appendChild(link);
-        });
-        modalVersions.classList.add('visible');
-      } else {
-        modalVersions.classList.remove('visible');
-      }
-      const modalLink = document.getElementById('modal-link');
-      if (card.dataset.preview) {
-        modalLink.href = card.dataset.preview;
-        modalLink.style.display = '';
-      } else {
-        modalLink.href = '#';
-        modalLink.style.display = 'none';
-      }
-      overlay.classList.add('open');
-    });
-  });
-
-  document.querySelectorAll('.version-link').forEach(link => {
-    link.addEventListener('click', event => event.stopPropagation());
-  });
-
   modalClose.addEventListener('click', () => overlay.classList.remove('open'));
-  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
+  overlay.addEventListener('click', event => { if (event.target === overlay) overlay.classList.remove('open'); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') overlay.classList.remove('open'); });
 
   const backToTop = document.getElementById('back-to-top');
   window.addEventListener('scroll', () => {
     backToTop.classList.toggle('visible', window.scrollY > 500);
   }, { passive: true });
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  loadProjects().catch(error => {
+    console.error(error);
+    grid.classList.remove('is-loading');
+    grid.innerHTML = '<p class="render-status">Nie udało się załadować projektów. Sprawdź lokalny serwer HTTP.</p>';
   });
 </script>
 </body>
