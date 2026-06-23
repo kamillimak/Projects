@@ -1348,6 +1348,8 @@
       const total = projects.length || Number(counter.dataset.count || 0);
       counter.dataset.count = String(total);
       counter.textContent = String(total);
+      counter.dataset.ready = 'true';
+      if (statsBar?.dataset.animated === 'true') animateStat(counter);
     }
   }
 
@@ -1438,8 +1440,10 @@
     document.querySelectorAll('.card').forEach(card => observer.observe(card));
   }
 
-  const statValues = document.querySelectorAll('.stat-val[data-count]');
   const animateStat = value => {
+    if (value.id === 'count-projects' && value.dataset.ready !== 'true') return;
+    if (value.dataset.frame) cancelAnimationFrame(Number(value.dataset.frame));
+
     const target = Number(value.dataset.count || 0);
     const prefix = value.dataset.prefix || '';
     const suffix = value.dataset.suffix || '';
@@ -1450,16 +1454,21 @@
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       value.textContent = `${prefix}${Math.round(target * eased)}${suffix}`;
-      if (progress < 1) requestAnimationFrame(tick);
+      if (progress < 1) {
+        value.dataset.frame = String(requestAnimationFrame(tick));
+      } else {
+        delete value.dataset.frame;
+      }
     };
 
-    requestAnimationFrame(tick);
+    value.dataset.frame = String(requestAnimationFrame(tick));
   };
 
   const statsObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       entry.target.querySelectorAll('.stat-val[data-count]').forEach(animateStat);
+      entry.target.dataset.animated = 'true';
       statsObserver.unobserve(entry.target);
     });
   }, { threshold: 0.45 });
