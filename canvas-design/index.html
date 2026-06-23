@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canvas Design - Kamil Mikołajczyk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --text: #f0efe9;
+      --muted: #6b7280;
+      --accent: #3b82f6;
+    }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      line-height: 1.6;
+    }
+    .portfolio-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.9);
+      backdrop-filter: blur(12px);
+    }
+    .portfolio-bar a {
+      color: var(--text);
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+    }
+    .portfolio-bar span { color: var(--muted); font-size: 0.82rem; }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1fr);
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.6rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 1.25rem;
+    }
+    .lead {
+      color: var(--muted);
+      max-width: 620px;
+      font-size: 1rem;
+    }
+    .visual {
+      min-height: 360px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 24% 24%, rgba(59,130,246,0.26), transparent 30%),
+        radial-gradient(circle at 78% 70%, rgba(240,239,233,0.12), transparent 28%),
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      position: relative;
+      overflow: hidden;
+    }
+    .visual::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(240,239,233,0.14);
+      border-radius: 8px;
+    }
+    .visual::after {
+      content: "AI";
+      position: absolute;
+      right: 28px;
+      bottom: 16px;
+      color: rgba(240,239,233,0.12);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 8rem;
+      font-weight: 700;
+      letter-spacing: -0.08em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      min-height: 210px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      background: var(--surface);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59,130,246,0.55);
+    }
+    .card span {
+      display: inline-flex;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .card h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.55rem;
+    }
+    .card p { color: var(--muted); font-size: 0.86rem; }
+    @media (max-width: 860px) {
+      .hero,
+      .grid { grid-template-columns: 1fr; }
+      .portfolio-bar { padding: 0 1rem; }
+      main { padding: 3rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="portfolio-bar">
+    <a href="../index.html#creative">← Powrót do portfolio</a>
+    <span>Canvas Design</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Projekty kreatywne</p>
+        <h1>Canvas Design</h1>
+        <p class="lead">Przestrzeń na zdjęcia, grafiki, filmiki i muzykę tworzone z wykorzystaniem narzędzi AI. To miejsce będzie działać jako galeria eksperymentów, materiałów marketingowych i kreatywnych koncepcji.</p>
+      </div>
+      <div class="visual" aria-hidden="true"></div>
+    </section>
+    <section class="grid" aria-label="Kategorie projektów kreatywnych">
+      <article class="card">
+        <span>01</span>
+        <h2>Zdjęcia</h2>
+        <p>Portrety, sesje produktowe, obróbka i warianty stylizacji przygotowane pod publikację.</p>
+      </article>
+      <article class="card">
+        <span>02</span>
+        <h2>Grafiki</h2>
+        <p>Key visuale, miniatury, kreacje social media i materiały do stron internetowych.</p>
+      </article>
+      <article class="card">
+        <span>03</span>
+        <h2>Filmiki</h2>
+        <p>Krótkie animacje, materiały promocyjne i formaty do prezentacji usług.</p>
+      </article>
+      <article class="card">
+        <span>04</span>
+        <h2>Muzyka</h2>
+        <p>Eksperymenty audio, podkłady i szkice dźwiękowe do projektów kreatywnych.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

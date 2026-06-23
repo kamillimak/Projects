@@ -71,7 +71,7 @@
       transition: color 0.2s;
     }
     nav a:hover { color: var(--text); }
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; align-items: center; gap: clamp(1rem, 1.7vw, 2rem); }
     .nav-toggle {
       display: none;
       width: 38px;
@@ -591,6 +591,131 @@
       .card.featured .card-preview { height: 200px; }
     }
 
+    /* ─── AI CERTIFICATES & CREATIVE WORK ─── */
+    .proof-section,
+    .creative-section {
+      max-width: 1200px;
+      margin: 5rem auto 0;
+      padding: 0 2rem;
+    }
+    .proof-grid,
+    .creative-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .proof-card,
+    .creative-card {
+      min-height: 300px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.018));
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .proof-card:hover,
+    .creative-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(96,165,250,0.46);
+      background: linear-gradient(145deg, rgba(59,130,246,0.13), rgba(255,255,255,0.022));
+    }
+    .proof-visual,
+    .creative-visual {
+      height: 132px;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 18% 24%, rgba(96,165,250,0.22), transparent 28%),
+        linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.01));
+      position: relative;
+      overflow: hidden;
+    }
+    .proof-visual::before,
+    .creative-visual::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(240,239,233,0.12);
+      border-radius: 8px;
+    }
+    .proof-badge,
+    .creative-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      width: fit-content;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid rgba(96,165,250,0.45);
+      border-radius: 999px;
+      color: var(--text);
+      background: rgba(13,13,13,0.58);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .proof-body,
+    .creative-body { padding: 1.15rem; }
+    .proof-body h3,
+    .creative-body h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.55rem;
+    }
+    .proof-body p,
+    .creative-body p {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+    .proof-meta,
+    .creative-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .proof-meta span,
+    .creative-meta span {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      padding: 0.18rem 0.55rem;
+    }
+    .proof-actions,
+    .creative-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .proof-actions a,
+    .creative-actions a {
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.42rem 0.7rem;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .proof-actions a:hover,
+    .creative-actions a:hover {
+      border-color: var(--accent);
+      background: rgba(59,130,246,0.08);
+    }
+    .proof-card.pending {
+      border-style: dashed;
+      background: rgba(255,255,255,0.024);
+    }
+    .creative-card.wide { grid-column: span 2; }
+
     /* ─── MODAL OVERLAY ─── */
     .modal-overlay {
       position: fixed; inset: 0;
@@ -947,6 +1072,9 @@
     @media (max-width: 900px) {
       .stats-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .proof-grid,
+      .creative-grid { grid-template-columns: 1fr; }
+      .creative-card.wide { grid-column: auto; }
     }
     @media (max-width: 560px) {
       .stats-bar,
@@ -964,6 +1092,8 @@
   <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Otwórz menu" aria-expanded="false">☰</button>
   <div class="nav-links" id="nav-links">
     <a href="#projects">Projekty</a>
+    <a href="#certificates">Certyfikaty AI</a>
+    <a href="#creative">Kreatywne</a>
     <a href="#process">Proces</a>
     <a href="#contact">Kontakt</a>
     <a href="tel:+48577539333">+48 577-539-333</a>
@@ -1008,6 +1138,113 @@
   <!-- GRID -->
   <div class="projects-grid is-loading" id="projects-grid" aria-live="polite">
     <p class="render-status">Ładuję projekty z plików meta.json...</p>
+  </div>
+</section>
+
+<!-- AI CERTIFICATES -->
+<section class="proof-section" id="certificates">
+  <div class="section-header">
+    <span class="section-title">Certyfikaty AI</span>
+    <span class="section-count">2 zdobyte · 1 miejsce przygotowane</span>
+  </div>
+  <div class="proof-grid">
+    <article class="proof-card">
+      <div class="proof-visual">
+        <span class="proof-badge">AI Heroes 2026</span>
+      </div>
+      <div class="proof-body">
+        <h3>AI w sektorze publicznym</h3>
+        <p>Ścieżka o praktycznym i odpowiedzialnym wykorzystaniu AI w administracji publicznej, usługach dla obywateli, Copilocie i bezpieczeństwie danych.</p>
+        <div class="proof-meta">
+          <span>CloudTeam</span>
+          <span>4h</span>
+          <span>23.06.2026</span>
+        </div>
+        <div class="proof-actions">
+          <a href="assets/certificates/ai-heroes-public-sector-kamil-mikolajczyk.pdf" target="_blank" rel="noopener">PDF</a>
+          <a href="assets/certificates/ai-heroes-public-sector-kamil-mikolajczyk.jsonld" target="_blank" rel="noopener">JSON-LD</a>
+          <a href="https://ai-heroes.pl/sciezka-publiczny/" target="_blank" rel="noopener">Program</a>
+        </div>
+      </div>
+    </article>
+    <article class="proof-card">
+      <div class="proof-visual">
+        <span class="proof-badge">AI Heroes 2026</span>
+      </div>
+      <div class="proof-body">
+        <h3>Agenci AI w organizacji nowej generacji</h3>
+        <p>Ścieżka o wdrażaniu agentowej AI: od wyboru przypadków użycia, przez Copilot Studio i gotowych agentów Microsoft, po Azure AI Foundry i GitHub Copilot.</p>
+        <div class="proof-meta">
+          <span>CloudTeam</span>
+          <span>5h</span>
+          <span>23.06.2026</span>
+        </div>
+        <div class="proof-actions">
+          <a href="assets/certificates/ai-heroes-agenci-ai-kamil-mikolajczyk.pdf" target="_blank" rel="noopener">PDF</a>
+          <a href="assets/certificates/ai-heroes-agenci-ai-kamil-mikolajczyk.jsonld" target="_blank" rel="noopener">JSON-LD</a>
+          <a href="https://ai-heroes.pl/sciezka-agenci/" target="_blank" rel="noopener">Program</a>
+        </div>
+      </div>
+    </article>
+    <article class="proof-card pending">
+      <div class="proof-visual">
+        <span class="proof-badge">Wkrótce</span>
+      </div>
+      <div class="proof-body">
+        <h3>Kolejny certyfikat AI</h3>
+        <p>Miejsce przygotowane pod trzeci certyfikat. Po dodaniu PDF i JSON-LD wystarczy podmienić treść, linki oraz datę wystawienia.</p>
+        <div class="proof-meta">
+          <span>AI</span>
+          <span>certyfikat</span>
+          <span>2026</span>
+        </div>
+        <div class="proof-actions">
+          <a href="#contact">Dodaj później</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- CREATIVE PROJECTS -->
+<section class="creative-section" id="creative">
+  <div class="section-header">
+    <span class="section-title">Projekty kreatywne</span>
+    <span class="section-count">/canvas-design</span>
+  </div>
+  <div class="creative-grid">
+    <article class="creative-card wide">
+      <div class="creative-visual">
+        <span class="creative-badge">Canvas Design</span>
+      </div>
+      <div class="creative-body">
+        <h3>Zdjęcia, grafiki, filmiki i muzyka</h3>
+        <p>Przestrzeń na eksperymenty kreatywne tworzone z wykorzystaniem narzędzi AI: od kompozycji graficznych i materiałów marketingowych po krótkie formy wideo oraz muzykę.</p>
+        <div class="creative-meta">
+          <span>obrazy</span>
+          <span>wideo</span>
+          <span>audio</span>
+          <span>AI design</span>
+        </div>
+        <div class="creative-actions">
+          <a href="canvas-design/">Otwórz /canvas-design</a>
+          <a href="#contact">Zaproponuj projekt</a>
+        </div>
+      </div>
+    </article>
+    <article class="creative-card">
+      <div class="creative-visual">
+        <span class="creative-badge">W przygotowaniu</span>
+      </div>
+      <div class="creative-body">
+        <h3>Galeria realizacji</h3>
+        <p>Miejsce na kolekcje miniatur, kategorie oraz linki do pełnych materiałów po uruchomieniu osobnej podstrony kreatywnej.</p>
+        <div class="creative-meta">
+          <span>galeria</span>
+          <span>portfolio</span>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
