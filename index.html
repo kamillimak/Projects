@@ -71,6 +71,15 @@
       transition: color 0.2s;
     }
     nav a:hover { color: var(--text); }
+    nav a.active { color: var(--text); }
+    nav a.active::after {
+      content: "";
+      display: block;
+      height: 2px;
+      margin-top: 0.28rem;
+      border-radius: 999px;
+      background: var(--accent);
+    }
     .nav-links { display: flex; align-items: center; gap: clamp(1rem, 1.7vw, 2rem); }
     .nav-toggle {
       display: none;
@@ -601,7 +610,7 @@
     .proof-grid,
     .creative-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 1rem;
     }
     .proof-card,
@@ -613,15 +622,21 @@
       overflow: hidden;
       transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
+    .proof-card {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1fr);
+      cursor: pointer;
+    }
     .proof-card:hover,
     .creative-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-5px) scale(1.005);
       border-color: rgba(96,165,250,0.46);
       background: linear-gradient(145deg, rgba(59,130,246,0.13), rgba(255,255,255,0.022));
     }
+    .proof-card:hover .certificate-cover img { transform: scale(1.025); }
     .proof-visual,
     .creative-visual {
-      height: 132px;
+      min-height: 100%;
       padding: 1rem;
       border-bottom: 1px solid var(--border);
       background:
@@ -629,6 +644,13 @@
         linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.01));
       position: relative;
       overflow: hidden;
+    }
+    .proof-visual {
+      border-right: 1px solid var(--border);
+      border-bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .proof-visual::before,
     .creative-visual::before {
@@ -653,6 +675,41 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.7rem;
       font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .certificate-cover {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 1.414 / 1;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f4f4f4;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.28);
+    }
+    .certificate-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: transform 0.28s ease;
+    }
+    .certificate-pill {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 2;
+      display: inline-flex;
+      padding: 0.28rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(13,13,13,0.72);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -710,11 +767,100 @@
       border-color: var(--accent);
       background: rgba(59,130,246,0.08);
     }
+    .external-icon {
+      display: inline-block;
+      margin-left: 0.35rem;
+      transform: translateY(-0.04rem);
+    }
     .proof-card.pending {
       border-style: dashed;
       background: rgba(255,255,255,0.024);
     }
     .creative-card.wide { grid-column: span 2; }
+
+    .certificate-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 260;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0,0,0,0.86);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+    }
+    .certificate-modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .certificate-modal {
+      width: min(1080px, 100%);
+      height: min(88vh, 860px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      box-shadow: 0 28px 80px rgba(0,0,0,0.5);
+    }
+    .certificate-modal-header {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.8rem 1rem;
+      background: #397d28;
+      color: #fff;
+    }
+    .certificate-modal-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+    .certificate-modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+    .certificate-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      padding: 0.55rem 0.85rem;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .certificate-close {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.78);
+      cursor: pointer;
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+    .certificate-close:hover { color: #fff; background: rgba(255,255,255,0.12); }
+    .certificate-frame {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #f3f4f6;
+    }
 
     /* ─── MODAL OVERLAY ─── */
     .modal-overlay {
@@ -1074,6 +1220,12 @@
       .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .proof-grid,
       .creative-grid { grid-template-columns: 1fr; }
+      .proof-card { grid-template-columns: 1fr; }
+      .proof-visual {
+        min-height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
       .creative-card.wide { grid-column: auto; }
     }
     @media (max-width: 560px) {
@@ -1092,8 +1244,7 @@
   <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Otwórz menu" aria-expanded="false">☰</button>
   <div class="nav-links" id="nav-links">
     <a href="#projects">Projekty</a>
-    <a href="#certificates">Certyfikaty AI</a>
-    <a href="#creative">Kreatywne</a>
+    <a href="#certificates">Certyfikaty</a>
     <a href="#process">Proces</a>
     <a href="#contact">Kontakt</a>
     <a href="tel:+48577539333">+48 577-539-333</a>
@@ -1145,12 +1296,15 @@
 <section class="proof-section" id="certificates">
   <div class="section-header">
     <span class="section-title">Certyfikaty AI</span>
-    <span class="section-count">2 zdobyte · 1 miejsce przygotowane</span>
+    <span class="section-count">2 zdobyte</span>
   </div>
   <div class="proof-grid">
-    <article class="proof-card">
+    <article class="proof-card certificate-card" tabindex="0" data-pdf="assets/certificates/ai-heroes-public-sector-kamil-mikolajczyk.pdf" data-title="AI Heroes 2026 : AI w sektorze publicznym">
       <div class="proof-visual">
-        <span class="proof-badge">AI Heroes 2026</span>
+        <div class="certificate-cover">
+          <span class="certificate-pill">AI Heroes 2026</span>
+          <img src="assets/certificates/ai-heroes-public-sector-cover.png" alt="Pierwsza strona certyfikatu AI Heroes 2026: AI w sektorze publicznym" loading="lazy" decoding="async" />
+        </div>
       </div>
       <div class="proof-body">
         <h3>AI w sektorze publicznym</h3>
@@ -1161,15 +1315,16 @@
           <span>23.06.2026</span>
         </div>
         <div class="proof-actions">
-          <a href="assets/certificates/ai-heroes-public-sector-kamil-mikolajczyk.pdf" target="_blank" rel="noopener">PDF</a>
-          <a href="assets/certificates/ai-heroes-public-sector-kamil-mikolajczyk.jsonld" target="_blank" rel="noopener">JSON-LD</a>
-          <a href="https://ai-heroes.pl/sciezka-publiczny/" target="_blank" rel="noopener">Program</a>
+          <a href="https://ai-heroes.pl/sciezka-publiczny/" target="_blank" rel="noopener" class="certificate-details">Szczegóły <span class="external-icon" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </article>
-    <article class="proof-card">
+    <article class="proof-card certificate-card" tabindex="0" data-pdf="assets/certificates/ai-heroes-agenci-ai-kamil-mikolajczyk.pdf" data-title="AI Heroes 2026 : Droga do organizacji nowej generacji: agenci AI">
       <div class="proof-visual">
-        <span class="proof-badge">AI Heroes 2026</span>
+        <div class="certificate-cover">
+          <span class="certificate-pill">AI Heroes 2026</span>
+          <img src="assets/certificates/ai-heroes-agenci-ai-cover.png" alt="Pierwsza strona certyfikatu AI Heroes 2026: agenci AI" loading="lazy" decoding="async" />
+        </div>
       </div>
       <div class="proof-body">
         <h3>Agenci AI w organizacji nowej generacji</h3>
@@ -1180,12 +1335,12 @@
           <span>23.06.2026</span>
         </div>
         <div class="proof-actions">
-          <a href="assets/certificates/ai-heroes-agenci-ai-kamil-mikolajczyk.pdf" target="_blank" rel="noopener">PDF</a>
-          <a href="assets/certificates/ai-heroes-agenci-ai-kamil-mikolajczyk.jsonld" target="_blank" rel="noopener">JSON-LD</a>
-          <a href="https://ai-heroes.pl/sciezka-agenci/" target="_blank" rel="noopener">Program</a>
+          <a href="https://ai-heroes.pl/sciezka-agenci/" target="_blank" rel="noopener" class="certificate-details">Szczegóły <span class="external-icon" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </article>
+    <!-- JSON-LD files are kept in assets/certificates for validation, but are intentionally hidden from the public card actions for now. -->
+    <!-- Future third certificate placeholder:
     <article class="proof-card pending">
       <div class="proof-visual">
         <span class="proof-badge">Wkrótce</span>
@@ -1203,11 +1358,12 @@
         </div>
       </div>
     </article>
+    -->
   </div>
 </section>
 
 <!-- CREATIVE PROJECTS -->
-<section class="creative-section" id="creative">
+<section class="creative-section" id="creative" hidden>
   <div class="section-header">
     <span class="section-title">Projekty kreatywne</span>
     <span class="section-count">/canvas-design</span>
@@ -1349,6 +1505,23 @@
   </div>
 </div>
 
+<!-- CERTIFICATE MODAL -->
+<div class="certificate-modal-overlay" id="certificate-modal-overlay" aria-hidden="true">
+  <div class="certificate-modal" role="dialog" aria-modal="true" aria-labelledby="certificate-modal-title">
+    <header class="certificate-modal-header">
+      <h2 id="certificate-modal-title">Certyfikat AI</h2>
+      <div class="certificate-modal-actions">
+        <a class="certificate-download" id="certificate-download" href="#" download>
+          <span aria-hidden="true">↓</span>
+          Podpisany PDF
+        </a>
+        <button class="certificate-close" id="certificate-close" type="button" aria-label="Zamknij">×</button>
+      </div>
+    </header>
+    <iframe class="certificate-frame" id="certificate-frame" title="Podgląd certyfikatu PDF"></iframe>
+  </div>
+</div>
+
 <script>
   const PROJECT_SOURCES = [
     { meta: 'projects/ams-bronowicki/meta.json', slug: 'ams-bronowicki', browserLabel: 'Moto Komis', previewImage: 'assets/previews/auto-mechanik.png', previewPosition: 'center top' },
@@ -1392,6 +1565,12 @@
   const modalLink = document.getElementById('modal-link');
   const modalContact = document.getElementById('modal-contact');
   const modalNote = document.getElementById('modal-cta-note');
+  const navSectionLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+  const certificateOverlay = document.getElementById('certificate-modal-overlay');
+  const certificateFrame = document.getElementById('certificate-frame');
+  const certificateTitle = document.getElementById('certificate-modal-title');
+  const certificateDownload = document.getElementById('certificate-download');
+  const certificateClose = document.getElementById('certificate-close');
   let projects = [];
   let currentFilter = 'all';
   let activeModalProject = null;
@@ -1420,6 +1599,24 @@
       });
     });
   }
+
+  function setActiveNav(hash) {
+    navSectionLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === hash);
+    });
+  }
+
+  const sectionObserver = new IntersectionObserver(entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible) setActiveNav(`#${visible.target.id}`);
+  }, { rootMargin: '-22% 0px -58% 0px', threshold: [0.12, 0.28, 0.5] });
+
+  navSectionLinks.forEach(link => {
+    const section = document.querySelector(link.getAttribute('href'));
+    if (section) sectionObserver.observe(section);
+  });
 
   const pluralProjects = count => count === 1 ? 'projekt' : count > 1 && count < 5 ? 'projekty' : 'projektów';
   const localProjectUrl = project => `projects/${project.slug}/index.html`;
@@ -1716,6 +1913,51 @@
   modalClose.addEventListener('click', () => overlay.classList.remove('open'));
   overlay.addEventListener('click', event => { if (event.target === overlay) overlay.classList.remove('open'); });
   document.addEventListener('keydown', event => { if (event.key === 'Escape') overlay.classList.remove('open'); });
+
+  function openCertificateModal(card) {
+    const pdf = card.dataset.pdf;
+    const title = card.dataset.title || 'Certyfikat AI';
+    if (!pdf) return;
+
+    certificateTitle.textContent = title;
+    certificateFrame.src = `${pdf}#toolbar=0&navpanes=0`;
+    certificateDownload.href = pdf;
+    certificateOverlay.classList.add('open');
+    certificateOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCertificateModal() {
+    certificateOverlay.classList.remove('open');
+    certificateOverlay.setAttribute('aria-hidden', 'true');
+    certificateFrame.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.certificate-card').forEach(card => {
+    card.addEventListener('click', event => {
+      if (event.target.closest('a')) return;
+      openCertificateModal(card);
+    });
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openCertificateModal(card);
+      }
+    });
+  });
+
+  document.querySelectorAll('.certificate-details').forEach(link => {
+    link.addEventListener('click', event => event.stopPropagation());
+  });
+
+  certificateClose.addEventListener('click', closeCertificateModal);
+  certificateOverlay.addEventListener('click', event => {
+    if (event.target === certificateOverlay) closeCertificateModal();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && certificateOverlay.classList.contains('open')) closeCertificateModal();
+  });
 
   const backToTop = document.getElementById('back-to-top');
   window.addEventListener('scroll', () => {
