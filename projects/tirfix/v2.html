@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIXTIR - Mobilny Serwis TIR 24/7</title>
+  <meta name="description" content="Druga wersja projektu TIRFIX jako FIXTIR - mobilny serwis TIR 24/7.">
+  <style id="portfolio-bar-style">
+    #portfolio-bar{position:fixed;top:0;left:0;right:0;height:48px;min-height:0;background:#0F140A;border-bottom:1px solid rgba(184,224,64,0.2);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:99999;font-family:system-ui,-apple-system,sans-serif;gap:16px;box-sizing:border-box}
+    #portfolio-bar a{text-decoration:none;display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+    .pbar-back{color:rgba(255,255,255,.65);transition:color .2s}.pbar-back:hover{color:#B8E040}.pbar-back svg{flex-shrink:0}.pbar-center{display:flex;align-items:center;gap:8px;min-width:0}.pbar-badge{background:#B8E040;color:#0F140A;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:3px}.pbar-label{font-size:.72rem;font-weight:500;color:rgba(255,255,255,.45);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pbar-nav{display:flex;align-items:center;gap:4px}.pbar-nav a,.pbar-nav span{color:rgba(255,255,255,.45);padding:6px 10px;border:1px solid rgba(255,255,255,.1);border-radius:4px;font-size:.68rem;font-weight:600;transition:color .2s,border-color .2s,background .2s}.pbar-nav a:hover{color:#B8E040;border-color:rgba(184,224,64,.4);background:rgba(184,224,64,.06)}.pbar-nav .pbar-current{color:#0F140A;background:#B8E040;border-color:#B8E040;pointer-events:none}.pbar-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}body{padding-top:48px!important}body>nav,nav.solid,nav#nav,nav#navbar,#root header[class*="top-0"],#root nav[class*="top-0"],#root .sticky.top-0,#root .fixed.top-0{top:48px!important}@media(max-width:720px){#portfolio-bar{padding:0 12px}.pbar-label{display:none}.pbar-nav a,.pbar-nav span{padding:5px 7px}.pbar-center{display:none}}
+  </style>
+  <style>
+    :root{--bg:#0d0f12;--panel:#151922;--ink:#f4f7fb;--muted:#9ca6b8;--line:rgba(255,255,255,.12);--accent:#ff6b13;--accent2:#ffb000}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;letter-spacing:.01em}
+    a{color:inherit}header{position:sticky;top:48px;z-index:20;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;background:rgba(13,15,18,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .brand{font-size:1.8rem;font-weight:900;letter-spacing:-.04em;text-decoration:none}.brand span{color:var(--accent)}
+    .nav{display:flex;gap:34px;align-items:center}.nav a{text-decoration:none;text-transform:uppercase;font-size:.78rem;font-weight:800;letter-spacing:.12em;color:#d4d9e4}.call{background:var(--accent);color:#fff;padding:13px 20px;border-radius:4px;text-decoration:none;font-weight:900}
+    .hero{min-height:calc(100vh - 118px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);border-bottom:1px solid var(--line);background:radial-gradient(circle at 80% 30%,rgba(255,107,19,.22),transparent 34%),linear-gradient(135deg,#10151d,#0b0d10)}
+    .hero-copy{padding:9vw 5vw 6vw}.eyebrow{font-family:Consolas,monospace;text-transform:uppercase;letter-spacing:.22em;color:var(--accent);font-size:.75rem;font-weight:800;margin-bottom:24px}
+    h1{font-size:clamp(4.5rem,10vw,10rem);line-height:.82;margin:0;text-transform:uppercase;letter-spacing:-.06em}.accent{color:var(--accent)}
+    .lead{max-width:650px;color:#c7cfdd;font-size:1.18rem;line-height:1.7;margin:34px 0 38px}.actions{display:flex;gap:16px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 24px;border:1px solid var(--line);text-decoration:none;text-transform:uppercase;font-weight:900;letter-spacing:.08em}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn:hover{transform:translateY(-2px)}
+    .hero-side{border-left:1px solid var(--line);display:grid;grid-template-rows:repeat(4,1fr)}.stat{padding:38px 42px;border-bottom:1px solid var(--line)}.stat:nth-child(2){background:var(--ink);color:#0d0f12}.stat-k{font-size:clamp(3rem,5vw,5rem);font-weight:900;letter-spacing:-.06em}.stat-v{text-transform:uppercase;font-weight:900;letter-spacing:.08em;margin-top:6px}.stat-sub{color:var(--muted);margin-top:6px}.stat:nth-child(2) .stat-sub{color:#475063}
+    .ticker{overflow:hidden;border-bottom:1px solid var(--line);background:var(--accent);color:#111;padding:16px 0;font-weight:900;text-transform:uppercase;white-space:nowrap}.ticker-track{display:inline-flex;gap:44px;animation:marquee 24s linear infinite}.ticker-track span{padding-left:44px}@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    section{padding:90px 5vw;border-bottom:1px solid var(--line)}.section-head{display:grid;grid-template-columns:260px 1fr;gap:44px;align-items:end;margin-bottom:54px}.num{font-size:4rem;font-weight:900;color:var(--accent)}.label{text-transform:uppercase;color:var(--muted);font:800 .72rem Consolas,monospace;letter-spacing:.2em}.section-head h2{font-size:clamp(2.4rem,5vw,5.6rem);line-height:.92;margin:0;text-transform:uppercase;letter-spacing:-.05em}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.card{padding:34px;min-height:230px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}.card h3{font-size:1.7rem;text-transform:uppercase;margin:20px 0 12px}.card p{color:var(--muted);line-height:1.65;margin:0}.icon{font-size:2.4rem}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-left:1px solid var(--line);border-top:1px solid var(--line)}.step{padding:34px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.step-num{font-size:4.8rem;font-weight:900;color:rgba(255,107,19,.18)}.step h3{text-transform:uppercase;font-size:1.6rem;margin:0 0 10px}.step p{color:var(--muted);line-height:1.55}
+    .contact{display:grid;grid-template-columns:.8fr 1.2fr;padding:0}.contact-info{background:var(--ink);color:#10151d;padding:70px 5vw}.contact-info h2{font-size:3rem;text-transform:uppercase;line-height:.95;margin:0 0 30px}.contact-item{display:block;padding:18px 0;border-bottom:1px solid rgba(0,0,0,.12);text-decoration:none}.contact-item small{display:block;text-transform:uppercase;letter-spacing:.18em;color:#657085;font-weight:900}.contact-item strong{display:block;font-size:1.45rem;margin-top:6px}.form{padding:70px 5vw}.field{display:block;margin-bottom:24px}.field span{display:block;color:var(--muted);text-transform:uppercase;font:800 .72rem Consolas,monospace;letter-spacing:.18em;margin-bottom:8px}.field input,.field textarea{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:#fff;padding:14px 0;font-size:1.1rem;outline:none}.field textarea{min-height:110px;resize:vertical}
+    footer{padding:34px 5vw;color:var(--muted);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:900px){header{height:auto;min-height:70px;align-items:flex-start;flex-direction:column;padding:18px 5vw}.nav{gap:14px;flex-wrap:wrap}.hero,.contact{grid-template-columns:1fr}.hero-side{border-left:0}.section-head,.grid,.steps{grid-template-columns:1fr}h1{font-size:4.5rem}}
+  </style>
+</head>
+<body>
+<div id="portfolio-bar">
+  <a href="../../index.html#projects" class="pbar-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Powr&oacute;t do portfolio
+  </a>
+  <div class="pbar-center"><span class="pbar-badge">TIRFIX</span><span class="pbar-label">v2</span></div>
+  <div class="pbar-nav"><a href="index.html">v1</a><span class="pbar-current">v2</span></div>
+</div>
+<header>
+  <a class="brand" href="#">FIX<span>TIR</span></a>
+  <nav class="nav">
+    <a href="#dlaczego">Dlaczego</a>
+    <a href="#uslugi">Us&#322;ugi</a>
+    <a href="#jak">Jak dzia&#322;amy</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <a class="call" href="tel:+48123456789">123 456 789</a>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Nr 01 - Mobilny serwis ci&#281;&#380;ar&oacute;wek</div>
+      <h1>Awaria<br><span class="accent">na trasie?</span><br>Jedziemy.</h1>
+      <p class="lead">Mobilny warsztat TIR dzia&#322;aj&#261;cy 24 godziny na dob&#281;, 365 dni w roku. Wroc&#322;aw, ca&#322;a Polska i wybrane lokalizacje w Niemczech oraz UE.</p>
+      <div class="actions">
+        <a class="btn primary" href="tel:+48123456789">Zadzwo&#324; teraz</a>
+        <a class="btn" href="#kontakt">Zg&#322;o&#347; usterk&#281;</a>
+      </div>
+    </div>
+    <aside class="hero-side">
+      <div class="stat"><div class="stat-k">24/7</div><div class="stat-v">Dy&#380;ur telefoniczny</div><div class="stat-sub">Zawsze odbieramy.</div></div>
+      <div class="stat"><div class="stat-k">&lt; 60'</div><div class="stat-v">&#346;redni czas dojazdu</div><div class="stat-sub">W aglomeracji Wroc&#322;aw.</div></div>
+      <div class="stat"><div class="stat-k">7</div><div class="stat-v">Marek w obs&#322;udze</div><div class="stat-sub">Mercedes, Scania, DAF, Volvo, MAN, Iveco, Renault.</div></div>
+      <div class="stat"><div class="stat-k">PL UE</div><div class="stat-v">Zasi&#281;g dzia&#322;ania</div><div class="stat-sub">Krajowe trasy i wybrane kraje UE.</div></div>
+    </aside>
+  </section>
+  <div class="ticker"><div class="ticker-track"><span>Mobilny Serwis TIR</span><span>Naprawa na miejscu</span><span>Dost&#281;pni 24/7</span><span>Polska i UE</span><span>Diagnostyka komputerowa</span><span>Klimatyzacja</span><span>Mobilny Serwis TIR</span><span>Naprawa na miejscu</span></div></div>
+  <section id="dlaczego">
+    <div class="section-head"><div><div class="num">02</div><div class="label">Dlaczego FIXTIR</div></div><h2>Czas to pieni&#261;dz.<br><span class="accent">My to rozumiemy.</span></h2></div>
+    <div class="grid">
+      <div class="card"><div class="icon">⚡</div><h3>B&#322;yskawiczny dojazd</h3><p>Zesp&oacute;&#322; rusza natychmiast po zg&#322;oszeniu. Minimalizujemy ka&#380;d&#261; minut&#281; przestoju.</p></div>
+      <div class="card"><div class="icon">🔧</div><h3>Naprawa na miejscu</h3><p>Mobilny warsztat z pe&#322;nym wyposa&#380;eniem. Wiele napraw wykonujemy bez holowania.</p></div>
+      <div class="card"><div class="icon">🛡</div><h3>Dost&#281;pno&#347;&#263; 24/7</h3><p>Non-stop, 365 dni w roku. Awarie nie maj&#261; harmonogramu, my te&#380; nie.</p></div>
+    </div>
+  </section>
+  <section id="uslugi">
+    <div class="section-head"><div><div class="num">03</div><div class="label">Zakres us&#322;ug</div></div><h2>Co naprawiamy</h2></div>
+    <div class="grid">
+      <div class="card"><h3>Awaryjna naprawa TIR</h3><p>Ci&#281;&#380;ar&oacute;wki, autobusy, naczepy i pojazdy dostawcze.</p></div>
+      <div class="card"><h3>Diagnostyka komputerowa</h3><p>Szybkie rozpoznanie usterki i decyzja, czy pojazd wraca na tras&#281;.</p></div>
+      <div class="card"><h3>Cz&#281;&#347;ci od r&#281;ki</h3><p>Organizacja i dostawa cz&#281;&#347;ci bez zb&#281;dnego przestoju.</p></div>
+    </div>
+  </section>
+  <section id="jak">
+    <div class="section-head"><div><div class="num">04</div><div class="label">Jak dzia&#322;amy</div></div><h2>Od zg&#322;oszenia do trasy</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><h3>Zadzwo&#324;</h3><p>Zg&#322;o&#347; awari&#281; i podaj lokalizacj&#281; pojazdu.</p></div>
+      <div class="step"><div class="step-num">02</div><h3>Wyje&#380;d&#380;amy</h3><p>Mobilny zesp&oacute;&#322; rusza z pe&#322;nym zapleczem.</p></div>
+      <div class="step"><div class="step-num">03</div><h3>Diagnoza</h3><p>Oceniamy usterk&#281;, informujemy o kosztach i dzia&#322;amy.</p></div>
+      <div class="step"><div class="step-num">04</div><h3>W tras&#281;</h3><p>Pojazd sprawny, kierowca jedzie dalej.</p></div>
+    </div>
+  </section>
+  <section class="contact" id="kontakt">
+    <div class="contact-info">
+      <h2>Dane kontaktowe</h2>
+      <a class="contact-item" href="tel:+48123456789"><small>Telefon 24/7</small><strong>123 456 789</strong></a>
+      <a class="contact-item" href="mailto:poczta@fixtir.pl"><small>E-mail</small><strong>poczta@fixtir.pl</strong></a>
+      <div class="contact-item"><small>Siedziba</small><strong>Wroc&#322;aw</strong></div>
+    </div>
+    <form class="form">
+      <label class="field"><span>Imi&#281; i nazwisko / firma</span><input type="text" placeholder="..."></label>
+      <label class="field"><span>Numer telefonu</span><input type="tel" placeholder="..."></label>
+      <label class="field"><span>Lokalizacja pojazdu</span><input type="text" placeholder="..."></label>
+      <label class="field"><span>Opisz usterk&#281;</span><textarea placeholder="..."></textarea></label>
+      <button class="btn primary" type="button">Wy&#347;lij zg&#322;oszenie</button>
+    </form>
+  </section>
+</main>
+<footer><strong>FIXTIR</strong><span>&copy; 2026 FIXTIR. Wszelkie prawa zastrze&#380;one.</span></footer>
+</body>
+</html>
