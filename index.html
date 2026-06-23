@@ -267,6 +267,14 @@
       font-size: 0.68rem;
       font-weight: 700;
     }
+    .filter-btn.featured-filter {
+      border-color: color-mix(in srgb, var(--accent), transparent 35%);
+      color: var(--accent);
+    }
+    .filter-btn.featured-filter:hover,
+    .filter-btn.featured-filter.active {
+      color: #fff;
+    }
 
     /* ─── GRID ─── */
     .projects-grid {
@@ -487,6 +495,21 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 0.75rem;
+    }
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin-bottom: 0.55rem;
+      padding: 0.22rem 0.55rem;
+      border: 1px solid color-mix(in srgb, var(--project-accent), transparent 55%);
+      border-radius: 999px;
+      color: color-mix(in srgb, var(--project-accent), #fff 18%);
+      background: color-mix(in srgb, var(--project-accent), transparent 90%);
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
     .version-links {
       display: flex;
@@ -983,7 +1006,7 @@
     <span class="tool-badge">Codex</span>
     <span class="tool-badge">AI Studio</span>
     <span class="tool-badge">Trae</span>
-    <span class="tool-badge">Last commit: Add FIXTIR version and repair project previews</span>
+    <span class="tool-badge">Last commit: Add portfolio validation and preview tooling</span>
   </div>
 </footer>
 
@@ -1103,7 +1126,7 @@
 
   const pluralProjects = count => count === 1 ? 'projekt' : count > 1 && count < 5 ? 'projekty' : 'projektów';
   const localProjectUrl = project => `projects/${project.slug}/index.html`;
-  const normalizeTools = value => String(value || '').replace(/Â·|·/g, '-');
+  const normalizeTools = value => String(value || '').replace(new RegExp(String.fromCharCode(183), 'g'), '-');
   const versionHref = (project, version) => `projects/${project.slug}/${version}`;
   const versionLabel = index => `v${index + 1}`;
 
@@ -1139,10 +1162,19 @@
   }
 
   function renderFilters() {
-    const categories = ['all', ...new Set(projects.map(project => project.category))];
+    const categories = [
+      { id: 'all', label: CATEGORY_LABELS.all, count: projects.length },
+      { id: 'featured', label: 'Polecane', count: projects.filter(project => project.featured).length, featured: true },
+      ...[...new Set(projects.map(project => project.category))].map(category => ({
+        id: category,
+        label: CATEGORY_LABELS[category] || category,
+        count: projects.filter(project => project.category === category).length
+      }))
+    ].filter(category => category.id === 'all' || category.count > 0);
+
     filterBar.innerHTML = categories.map(category => {
-      const count = category === 'all' ? projects.length : projects.filter(project => project.category === category).length;
-      return `<button class="filter-btn${category === currentFilter ? ' active' : ''}" data-filter="${escapeHtml(category)}">${escapeHtml(CATEGORY_LABELS[category] || category)}<span>${count}</span></button>`;
+      const classes = ['filter-btn', category.featured ? 'featured-filter' : '', category.id === currentFilter ? 'active' : ''].filter(Boolean).join(' ');
+      return `<button class="${classes}" data-filter="${escapeHtml(category.id)}">${escapeHtml(category.label)}<span>${category.count}</span></button>`;
     }).join('');
 
     filterBar.querySelectorAll('.filter-btn').forEach(button => {
@@ -1156,7 +1188,7 @@
   }
 
   function renderProjects() {
-    const filtered = projects.filter(project => currentFilter === 'all' || project.category === currentFilter);
+    const filtered = projects.filter(project => currentFilter === 'all' || (currentFilter === 'featured' ? project.featured : project.category === currentFilter));
     grid.classList.remove('is-loading');
 
     if (!filtered.length) {
@@ -1186,6 +1218,7 @@
 
   function renderProjectCard(project) {
     const featured = project.featured ? ' featured' : '';
+    const featuredBadge = project.featured ? '<span class="featured-badge">Polecany</span>' : '';
     const versions = project.versions.length > 1 ? `<div class="version-links">${project.versions.map((version, index) => `<a class="version-link" href="${escapeHtml(versionHref(project, version))}">v${index + 1}</a>`).join('')}</div>` : '';
     const tags = project.tags.slice(0, 3).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
     const preview = renderPreview(project, project.versions[0], 0);
@@ -1193,6 +1226,7 @@
     return `<article class="card${featured}" data-id="${escapeHtml(project.id)}" data-category="${escapeHtml(project.category)}" style="--project-accent:${escapeHtml(project.colorAccent || '#3B82F6')};--project-bg:${escapeHtml(project.colorBg || '#111827')};">
       ${preview}
       <div class="card-body">
+        ${featuredBadge}
         <p class="card-industry">${escapeHtml(project.industry || CATEGORY_LABELS[project.category] || project.category)}</p>
         <div class="card-title-row">
           <h2 class="card-title">${escapeHtml(project.title)}</h2>
@@ -1211,16 +1245,27 @@
     return project.previewVersions?.[version] || project.previewImage || '';
   }
 
-  function renderPreview(project, version = project.versions?.[0] || 'index.html', index = 0) {
+  function renderPreview(project, version = project.versions?.[0] || 'index.html', index = 0, options = {}) {
     const previewImage = previewImageForVersion(project, version);
     const label = project.versions?.length > 1 ? `<span class="preview-version-label">${versionLabel(index)}</span>` : '';
-    const image = previewImage ? `<img class="preview-img" src="${escapeHtml(previewImage)}" alt="Podgląd projektu ${escapeHtml(project.title)} ${versionLabel(index)}" loading="lazy" decoding="async" style="object-position:${escapeHtml(project.previewPosition || 'center top')};">${label}` : `${renderMock(project)}${label}`;
+    const placeholder = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="9"%3E%3C/svg%3E';
+    const sourceAttr = options.deferImage ? `src="${placeholder}" data-src="${escapeHtml(previewImage)}" fetchpriority="low"` : `src="${escapeHtml(previewImage)}"`;
+    const image = previewImage ? `<img class="preview-img" ${sourceAttr} alt="Podgląd projektu ${escapeHtml(project.title)} ${versionLabel(index)}" loading="lazy" decoding="async" style="object-position:${escapeHtml(project.previewPosition || 'center top')};">${label}` : `${renderMock(project)}${label}`;
     return `<div class="card-preview">
       <div class="preview-frame">
         <div class="browser-bar"><div class="browser-dot d-red"></div><div class="browser-dot d-yellow"></div><div class="browser-dot d-green"></div><div class="browser-url">${escapeHtml(project.browserLabel || project.title)}</div></div>
         <div class="page-mock" style="padding:0;background:${escapeHtml(project.colorBg || '#111827')};overflow:hidden;">${image}</div>
       </div>
     </div>`;
+  }
+
+  function hydrateLazyPreview(container) {
+    requestAnimationFrame(() => {
+      container.querySelectorAll('img[data-src]').forEach(image => {
+        image.src = image.dataset.src;
+        image.removeAttribute('data-src');
+      });
+    });
   }
 
   function renderMock(project) {
@@ -1233,7 +1278,7 @@
     </div>`;
   }
 
-  function updateProjectCount(count = projects.filter(project => currentFilter === 'all' || project.category === currentFilter).length) {
+  function updateProjectCount(count = projects.filter(project => currentFilter === 'all' || (currentFilter === 'featured' ? project.featured : project.category === currentFilter)).length) {
     if (visibleCount) visibleCount.textContent = `${count} ${pluralProjects(count)}`;
     const counter = document.getElementById('count-projects');
     if (counter) counter.dataset.count = String(projects.length || Number(counter.dataset.count || 0));
@@ -1250,7 +1295,8 @@
     document.getElementById('modal-time').textContent = project.timeToDeliver || '';
     document.getElementById('modal-category').textContent = CATEGORY_LABELS[project.category] || project.category || '';
     document.getElementById('modal-date').textContent = project.dateAdded || 'aktualizacja bieżąca';
-    modalPreview.innerHTML = renderPreview(project, project.versions[0], 0);
+    modalPreview.innerHTML = renderPreview(project, project.versions[0], 0, { deferImage: true });
+    hydrateLazyPreview(modalPreview);
     modalPreview.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
     modalPreview.style.setProperty('--project-bg', project.colorBg || '#111827');
     modalVersionPrev.style.setProperty('--project-accent', project.colorAccent || '#3B82F6');
@@ -1285,7 +1331,8 @@
     const href = project.external ? project.liveUrl : versionHref(project, version || 'index.html');
     activeModalProject = project;
     activeModalVersionIndex = index;
-    modalPreview.innerHTML = renderPreview(project, version || 'index.html', index);
+    modalPreview.innerHTML = renderPreview(project, version || 'index.html', index, { deferImage: true });
+    hydrateLazyPreview(modalPreview);
     modalLink.href = href || '#';
     modalLink.target = project.external ? '_blank' : '';
     modalLink.rel = project.external ? 'noopener noreferrer' : '';

@@ -21,8 +21,11 @@ https://github.com/kamillimak/Projects
 - `projects/[slug]/meta.json` - dane projektu odczytywane przez portfolio.
 - `assets/previews/` - grafiki podglądu używane na kartach i w modalu.
 - `assets/brand/` - logo, zdjęcia i assety marki.
+- `assets/project-bar.css` - wspólny styl belki powrotu na podstronach projektów.
 - `sources/` - miejsce na robocze źródła z innych narzędzi lub repozytoriów.
 - `scripts/validate-portfolio.ps1` - walidator struktury portfolio.
+- `scripts/sync-project-version-bars.ps1` - synchronizacja belki powrotu i linków wersji projektu.
+- `scripts/generate-project-preview.ps1` - generator screenshotów preview dla kart portfolio.
 - `PORTFOLIO-GUIDELINES.md` - szczegółowe wytyczne dla narzędzi AI.
 - `PROJECT-INTEGRATION.md` - skrócony kontrakt integracji projektów.
 
@@ -97,6 +100,7 @@ powershell -ExecutionPolicy Bypass -File scripts\sync-project-version-bars.ps1 -
 Ten krok synchronizuje belki powrotu i linki `v1`, `v2`, `v3` we wszystkich plikach projektu, więc starsze wersje nie zostają bez linku do nowej wersji.
 - Assety specyficzne dla projektu trzymaj w `projects/[slug]/assets/`.
 - Wspólne grafiki portfolio trzymaj w `assets/previews/` albo `assets/brand/`.
+- Jeżeli projekt ma być wyróżniony na stronie głównej, ustaw w `meta.json` pole `"featured": true`. W portfolio pojawi się filtr `Polecane`, a karta dostanie większy układ i etykietę.
 
 ## Plik `meta.json`
 
@@ -368,6 +372,20 @@ Zalecenia:
 
 Jeśli nie dodasz grafiki, portfolio wygeneruje placeholder automatycznie.
 
+Możesz też wygenerować screenshot automatycznie:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\generate-project-preview.ps1 -Slug nowy-projekt
+```
+
+Dla konkretnej wersji:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\generate-project-preview.ps1 -Slug nowy-projekt -Version v2.html -Output assets\previews\nowy-projekt-v2.png
+```
+
+Skrypt uruchamia lokalny serwer, robi zrzut przez headless Microsoft Edge i zapisuje plik w `assets/previews/`.
+
 ### 6. Dodaj projekt do `PROJECT_SOURCES`
 
 W `index.html` znajdź:
@@ -439,6 +457,8 @@ Walidator sprawdza między innymi:
 - istnienie plików z `versions`,
 - linki do projektów,
 - obecność nawigacji powrotu.
+- linki `v1`, `v2`, `v3` na każdej wersji projektu,
+- typowe ślady uszkodzonego kodowania UTF-8 po błędnej konwersji znaków.
 
 ### 9. Commit i push
 

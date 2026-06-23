@@ -1,0 +1,139 @@
+#portfolio-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  min-height: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+  padding: 0 24px;
+  background: #0f140a;
+  border-bottom: 1px solid rgba(184, 224, 64, 0.2);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#portfolio-bar a {
+  text-decoration: none;
+}
+
+.pbar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.pbar-back:hover {
+  color: #b8e040;
+}
+
+.pbar-back svg {
+  flex-shrink: 0;
+}
+
+.pbar-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pbar-badge {
+  max-width: 34vw;
+  overflow: hidden;
+  color: #0f140a;
+  background: #b8e040;
+  border-radius: 3px;
+  padding: 3px 10px;
+  font-size: 0.6rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pbar-label {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pbar-nav a,
+.pbar-nav span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 6px 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.68rem;
+  font-weight: 800;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.pbar-nav a:hover {
+  color: #b8e040;
+  border-color: rgba(184, 224, 64, 0.42);
+  background: rgba(184, 224, 64, 0.06);
+}
+
+.pbar-nav .pbar-current {
+  color: #0f140a;
+  border-color: #b8e040;
+  background: #b8e040;
+  pointer-events: none;
+}
+
+body {
+  padding-top: 48px !important;
+}
+
+body > nav,
+nav.solid,
+nav#nav,
+nav#navbar,
+#root header[class*="top-0"],
+#root nav[class*="top-0"],
+#root .sticky.top-0,
+#root .fixed.top-0 {
+  top: 48px !important;
+}
+
+@media (max-width: 720px) {
+  #portfolio-bar {
+    padding: 0 12px;
+  }
+
+  .pbar-center {
+    display: none;
+  }
+
+  .pbar-nav a,
+  .pbar-nav span {
+    min-width: 30px;
+    padding: 5px 7px;
+  }
+}

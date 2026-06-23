@@ -18,8 +18,60 @@ function Read-Text([string]$path) {
   return Get-Content -LiteralPath $path -Encoding UTF8 -Raw
 }
 
+function Get-DisplayPath([string]$path) {
+  $rootUri = [Uri]((Resolve-Path -LiteralPath $Root).Path.TrimEnd('\') + '\')
+  $pathUri = [Uri]((Resolve-Path -LiteralPath $path).Path)
+  return [Uri]::UnescapeDataString($rootUri.MakeRelativeUri($pathUri).ToString())
+}
+
+function Test-Mojibake {
+  $suspects = @(
+    ([char]0x00C4).ToString(),
+    ([char]0x0139).ToString(),
+    ([char]0x0102).ToString(),
+    (([char]0x00E2).ToString() + ([char]0x20AC).ToString()),
+    ([char]0x00C2).ToString(),
+    ([char]0xFFFD).ToString()
+  )
+
+  $scanFiles = @()
+  foreach ($name in @('index.html', 'README.md', 'PORTFOLIO-GUIDELINES.md', 'PROJECT-INTEGRATION.md', 'CLAUDE-HANDOFF.md')) {
+    $path = Join-Path $Root $name
+    if (Test-Path -LiteralPath $path -PathType Leaf) {
+      $scanFiles += Get-Item -LiteralPath $path
+    }
+  }
+
+  $projectsPath = Join-Path $Root 'projects'
+  if (Test-Path -LiteralPath $projectsPath -PathType Container) {
+    $scanFiles += Get-ChildItem -LiteralPath $projectsPath -Recurse -File |
+      Where-Object {
+        $_.FullName -notmatch '\\node_modules\\|\\_source\\|\\dist\\assets\\' -and
+        ($_.Extension -eq '.html' -or $_.Name -eq 'meta.json')
+      }
+  }
+
+  foreach ($file in $scanFiles) {
+    $lines = [IO.File]::ReadAllLines($file.FullName, [Text.Encoding]::UTF8)
+    for ($lineIndex = 0; $lineIndex -lt $lines.Count; $lineIndex++) {
+      foreach ($suspect in $suspects) {
+        if ($lines[$lineIndex].Contains($suspect)) {
+          $snippet = $lines[$lineIndex].Trim()
+          if ($snippet.Length -gt 120) {
+            $snippet = $snippet.Substring(0, 120) + '...'
+          }
+          Add-ValidationError "Possible mojibake in $(Get-DisplayPath $file.FullName):$($lineIndex + 1) => $snippet"
+          break
+        }
+      }
+    }
+  }
+}
+
 $metaFiles = Get-ChildItem -LiteralPath $Root -Recurse -Filter 'meta.json' -File |
-  Where-Object { $_.FullName -notmatch '\\node_modules\\' }
+  Where-Object { $_.FullName -notmatch '\\node_modules\\|\\sources\\|\\_source\\' }
+
+Test-Mojibake
 
 foreach ($meta in $metaFiles) {
   try {
@@ -42,6 +94,34 @@ foreach ($meta in $metaFiles) {
         $versionPath = Join-Path $projectDir $version
         if (!(Test-Path -LiteralPath $versionPath -PathType Leaf)) {
           Add-ValidationError "Missing version '$version' for project: $($json.id)"
+        }
+      }
+    }
+
+    $versions = @($json.versions)
+    if (-not $versions -or $versions.Count -eq 0) {
+      $versions = @('index.html')
+    }
+
+    foreach ($version in $versions) {
+      $versionPath = Join-Path $projectDir $version
+      if (!(Test-Path -LiteralPath $versionPath -PathType Leaf)) {
+        continue
+      }
+
+      $versionHtml = Read-Text $versionPath
+      if ($versionHtml -notmatch '\.\./\.\./index\.html#projects') {
+        Add-ValidationError "Missing return navigation in project target: projects/$($meta.Directory.Name)/$version"
+      }
+
+      if ($versions.Count -gt 1) {
+        foreach ($sibling in $versions) {
+          if ($sibling -eq $version) {
+            continue
+          }
+          if ($versionHtml -notmatch [regex]::Escape("href=`"$sibling`"")) {
+            Add-ValidationError "Missing version link '$sibling' in projects/$($meta.Directory.Name)/$version"
+          }
         }
       }
     }
