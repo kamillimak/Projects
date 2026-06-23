@@ -8,7 +8,7 @@
   "timeToDeliver": "4 dni",
   "previewUrl": "https://kamillimak.github.io/Projects/projects/ams-bronowicki/",
   "liveUrl": "",
-  "featured": true,
+  "featured": false,
   "colorAccent": "#F5B84B",
   "colorBg": "#0a1628",
   "tags": ["HTML", "Google Maps", "Automotive"],
