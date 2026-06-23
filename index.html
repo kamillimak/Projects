@@ -63,14 +63,16 @@
       object-position: left center;
       display: block;
     }
-    nav a {
+    nav a,
+    .nav-projects-toggle {
       color: var(--muted);
       text-decoration: none;
       font-size: 0.875rem;
       font-weight: 500;
       transition: color 0.2s;
     }
-    nav a:hover { color: var(--text); }
+    nav a:hover,
+    .nav-projects-toggle:hover { color: var(--text); }
     nav a.active { color: var(--text); }
     nav a.active::after {
       content: "";
@@ -81,6 +83,71 @@
       background: var(--accent);
     }
     .nav-links { display: flex; align-items: center; gap: clamp(1rem, 1.7vw, 2rem); }
+    .nav-item {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .nav-projects-toggle {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+    }
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 16px);
+      left: 50%;
+      min-width: 260px;
+      max-height: min(520px, 70vh);
+      overflow: auto;
+      padding: 0.45rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(22,22,22,0.98);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+      backdrop-filter: blur(14px);
+      transform: translate(-50%, 8px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+    }
+    .nav-item:hover .nav-dropdown,
+    .nav-item.open .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
+    .nav-dropdown button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0.62rem 0.7rem;
+      text-align: left;
+      font: inherit;
+      font-size: 0.8rem;
+    }
+    .nav-dropdown button:hover { background: rgba(255,255,255,0.06); }
+    .nav-dropdown span {
+      color: var(--muted);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
     .nav-toggle {
       display: none;
       width: 38px;
@@ -1200,6 +1267,32 @@
       }
       .nav-links.open { display: flex; }
       .nav-links a { padding: 0.75rem 0; }
+      .nav-links .nav-item {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-links .nav-item > a { padding: 0.75rem 0; }
+      .nav-links .nav-projects-toggle {
+        width: 38px;
+        height: 38px;
+      }
+      .nav-links .nav-dropdown {
+        position: static;
+        display: none;
+        width: 100%;
+        min-width: 0;
+        max-height: 280px;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        margin-top: 0.25rem;
+        box-shadow: none;
+      }
+      .nav-links .nav-item.open .nav-dropdown { display: block; }
       .nav-cta { text-align: center; margin-top: 0.5rem; }
       .hero {
         grid-template-columns: 1fr;
@@ -1243,9 +1336,14 @@
   </a>
   <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Otwórz menu" aria-expanded="false">☰</button>
   <div class="nav-links" id="nav-links">
-    <a href="#projects">Projekty</a>
-    <a href="#certificates">Certyfikaty</a>
-    <a href="#process">Proces</a>
+    <a href="#about">O mnie</a>
+    <div class="nav-item nav-projects-item" id="nav-projects-item">
+      <a href="#projects" id="nav-projects-link">Projekty</a>
+      <button class="nav-projects-toggle" id="nav-projects-toggle" type="button" aria-label="Rozwiń listę projektów" aria-expanded="false">▾</button>
+      <div class="nav-dropdown" id="projects-dropdown" aria-label="Lista projektów"></div>
+    </div>
+    <a href="#certificates">Certyfikaty AI</a>
+    <a href="#process">Współpraca</a>
     <a href="#contact">Kontakt</a>
     <a href="tel:+48577539333">+48 577-539-333</a>
     <a href="mailto:mikolajczykamil@gmail.com" class="nav-cta">Napisz →</a>
@@ -1253,13 +1351,13 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="about">
   <div class="hero-copy">
     <p class="hero-eyebrow">Freelance Web Design · Żórawina / Wrocław</p>
     <h1>Strony, które<br/><em>działają</em> na klientów</h1>
     <p class="hero-sub">Projektuję i dostarczam gotowe strony internetowe dla lokalnych firm. Każdy projekt to realna wizualizacja — możesz zobaczyć efekt zanim podejmiesz decyzję.</p>
     <div class="hero-actions">
-      <a href="#projects" class="btn-primary">Zobacz realizacje</a>
+      <a href="#projects" class="btn-primary">Zobacz projekty</a>
       <a href="#process" class="btn-ghost">Jak działam</a>
     </div>
   </div>
@@ -1279,7 +1377,7 @@
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-header">
-    <span class="section-title">Realizacje</span>
+    <span class="section-title">Projekty</span>
     <span class="section-count" id="visible-count">Ładuję projekty...</span>
   </div>
 
@@ -1296,7 +1394,6 @@
 <section class="proof-section" id="certificates">
   <div class="section-header">
     <span class="section-title">Certyfikaty AI</span>
-    <span class="section-count">2 zdobyte</span>
   </div>
   <div class="proof-grid">
     <article class="proof-card certificate-card" tabindex="0" data-pdf="assets/certificates/ai-heroes-public-sector-kamil-mikolajczyk.pdf" data-title="AI Heroes 2026 : AI w sektorze publicznym">
@@ -1552,6 +1649,9 @@
 
   const navToggle = document.getElementById('nav-toggle');
   const navLinks = document.getElementById('nav-links');
+  const navProjectsItem = document.getElementById('nav-projects-item');
+  const navProjectsToggle = document.getElementById('nav-projects-toggle');
+  const projectsDropdown = document.getElementById('projects-dropdown');
   const grid = document.getElementById('projects-grid');
   const filterBar = document.getElementById('filter-bar');
   const visibleCount = document.getElementById('visible-count');
@@ -1594,29 +1694,58 @@
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
+        navProjectsItem?.classList.remove('open');
+        navProjectsToggle?.setAttribute('aria-expanded', 'false');
         navToggle.setAttribute('aria-expanded', 'false');
         navToggle.textContent = '☰';
       });
     });
   }
 
-  function setActiveNav(hash) {
-    navSectionLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === hash);
+  if (navProjectsToggle && navProjectsItem) {
+    navProjectsToggle.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = navProjectsItem.classList.toggle('open');
+      navProjectsToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', event => {
+      if (!navProjectsItem.contains(event.target)) {
+        navProjectsItem.classList.remove('open');
+        navProjectsToggle.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 
-  const sectionObserver = new IntersectionObserver(entries => {
-    const visible = entries
-      .filter(entry => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible) setActiveNav(`#${visible.target.id}`);
-  }, { rootMargin: '-22% 0px -58% 0px', threshold: [0.12, 0.28, 0.5] });
+  function setActiveNav(hash) {
+    navSectionLinks.forEach(link => {
+      const isActive = link.getAttribute('href') === hash;
+      link.classList.toggle('active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  }
 
-  navSectionLinks.forEach(link => {
-    const section = document.querySelector(link.getAttribute('href'));
-    if (section) sectionObserver.observe(section);
-  });
+  const navSections = navSectionLinks
+    .map(link => ({ hash: link.getAttribute('href'), section: document.querySelector(link.getAttribute('href')) }))
+    .filter(item => item.section);
+
+  function updateActiveNav() {
+    const marker = window.scrollY + 120;
+    const active = navSections.reduce((current, item) => {
+      return item.section.offsetTop <= marker ? item : current;
+    }, navSections[0]);
+    if (active) setActiveNav(active.hash);
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  window.addEventListener('resize', updateActiveNav);
+  window.addEventListener('hashchange', updateActiveNav);
+  updateActiveNav();
 
   const pluralProjects = count => count === 1 ? 'projekt' : count > 1 && count < 5 ? 'projekty' : 'projektów';
   const localProjectUrl = project => `projects/${project.slug}/index.html`;
@@ -1650,10 +1779,38 @@
     }));
 
     projects = loaded.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || a.title.localeCompare(b.title, 'pl'));
+    renderProjectsDropdown();
     renderFilters();
     renderProjects();
     updateProjectCount();
     observeCards();
+  }
+
+  function renderProjectsDropdown() {
+    if (!projectsDropdown) return;
+
+    projectsDropdown.innerHTML = projects.map(project => `
+      <button type="button" data-project-id="${escapeHtml(project.id)}">
+        ${escapeHtml(project.title)}
+        <span>${escapeHtml(CATEGORY_LABELS[project.category] || project.category || 'Projekt')}</span>
+      </button>
+    `).join('');
+
+    projectsDropdown.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        const project = projects.find(item => item.id === button.dataset.projectId);
+        if (!project) return;
+
+        navProjectsItem?.classList.remove('open');
+        navProjectsToggle?.setAttribute('aria-expanded', 'false');
+        navLinks?.classList.remove('open');
+        navToggle?.setAttribute('aria-expanded', 'false');
+        if (navToggle) navToggle.textContent = '☰';
+        document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActiveNav('#projects');
+        window.setTimeout(() => openProjectModal(project), 420);
+      });
+    });
   }
 
   function renderFilters() {
