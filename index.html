@@ -40,7 +40,7 @@
       z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem;
-      height: 56px;
+      height: 76px;
       background: rgba(13,13,13,0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -56,9 +56,9 @@
       align-items: center;
     }
     .nav-logo img {
-      height: 42px;
+      height: 64px;
       width: auto;
-      max-width: 180px;
+      max-width: 220px;
       object-fit: contain;
       object-position: left center;
       display: block;
@@ -96,7 +96,7 @@
 
     /* ─── HERO ─── */
     .hero {
-      padding: 7.5rem 2rem 5rem;
+      padding: 9rem 2rem 5rem;
       max-width: 1120px;
       margin: 0 auto;
       display: grid;
@@ -186,24 +186,38 @@
 
     /* ─── STATS BAR ─── */
     .stats-bar {
-      max-width: 900px;
+      max-width: 1120px;
       margin: 0 auto 4rem;
       padding: 0 2rem;
-      display: flex;
-      gap: 2rem;
-      border-top: 1px solid var(--border);
-      padding-top: 2rem;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
     }
-    .stat { display: flex; flex-direction: column; }
+    .stat {
+      min-height: 118px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018));
+      box-shadow: 0 18px 44px rgba(0,0,0,0.14);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .stat:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59,130,246,0.55);
+      background: linear-gradient(145deg, rgba(59,130,246,0.16), rgba(255,255,255,0.025));
+    }
     .stat-val {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.625rem;
+      font-size: clamp(1.5rem, 3vw, 2.15rem);
       font-weight: 700;
       color: var(--text);
       letter-spacing: -0.03em;
     }
-    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.1rem; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.65rem; line-height: 1.35; }
 
     /* ─── SECTION HEADER ─── */
     .section-header {
@@ -774,7 +788,7 @@
       margin-bottom: 0;
     }
     .process-inner {
-      max-width: 900px;
+      max-width: 1120px;
       margin: 0 auto;
     }
     .process h2 {
@@ -784,10 +798,44 @@
     }
     .process-steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
     }
-    .step { position: relative; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .step {
+      position: relative;
+      min-height: 280px;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(13,13,13,0.42);
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .step:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.45); }
+    .step-visual {
+      height: 112px;
+      margin-bottom: 1.25rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(135deg, rgba(59,130,246,0.18), transparent 58%),
+        rgba(255,255,255,0.035);
+      position: relative;
+      overflow: hidden;
+    }
+    .step-visual span { position: absolute; display: block; border-radius: 999px; }
+    .visual-brief span:nth-child(1) { width: 58px; height: 58px; left: 18px; top: 22px; border: 1px solid rgba(96,165,250,0.7); }
+    .visual-brief span:nth-child(2) { width: 92px; height: 8px; left: 92px; top: 34px; background: rgba(240,239,233,0.68); }
+    .visual-brief span:nth-child(3) { width: 64px; height: 8px; left: 92px; top: 54px; background: rgba(107,114,128,0.7); }
+    .visual-preview span:nth-child(1) { inset: 18px 22px; border-radius: 8px; border: 1px solid rgba(96,165,250,0.5); }
+    .visual-preview span:nth-child(2) { width: 74px; height: 42px; left: 38px; top: 44px; border-radius: 6px; background: rgba(59,130,246,0.32); }
+    .visual-preview span:nth-child(3) { width: 56px; height: 6px; right: 42px; top: 52px; background: rgba(240,239,233,0.7); box-shadow: 0 16px rgba(107,114,128,0.7), 0 32px rgba(107,114,128,0.45); }
+    .visual-revision span:nth-child(1) { width: 148px; height: 10px; left: 26px; top: 36px; background: rgba(107,114,128,0.6); }
+    .visual-revision span:nth-child(2) { width: 92px; height: 10px; left: 26px; top: 60px; background: rgba(96,165,250,0.75); }
+    .visual-revision span:nth-child(3) { width: 34px; height: 34px; right: 28px; bottom: 24px; border: 1px solid rgba(96,165,250,0.75); }
+    .visual-launch span:nth-child(1) { width: 42px; height: 42px; left: 26px; bottom: 26px; background: rgba(59,130,246,0.38); }
+    .visual-launch span:nth-child(2) { width: 86px; height: 1px; left: 74px; bottom: 47px; background: rgba(96,165,250,0.7); transform: rotate(-20deg); transform-origin: left center; }
+    .visual-launch span:nth-child(3) { width: 52px; height: 52px; right: 28px; top: 20px; border: 1px solid rgba(240,239,233,0.65); }
     .step-num {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.7rem; font-weight: 700;
@@ -860,10 +908,10 @@
     }
 
     @media (max-width: 640px) {
-      nav { padding: 0 1rem; }
+      nav { padding: 0 1rem; height: 76px; }
       .nav-logo img {
-        height: 34px;
-        max-width: 140px;
+        height: 64px;
+        max-width: 168px;
       }
       .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
       .nav-links {
@@ -884,7 +932,7 @@
       .nav-cta { text-align: center; margin-top: 0.5rem; }
       .hero {
         grid-template-columns: 1fr;
-        padding-top: 6rem;
+        padding-top: 7rem;
       }
       .hero-visual {
         order: -1;
@@ -895,6 +943,14 @@
       .card.featured { grid-template-columns: 1fr; }
       .contact { flex-direction: column; }
       .contact-actions { width: 100%; justify-content: flex-start; }
+    }
+    @media (max-width: 900px) {
+      .stats-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .stats-bar,
+      .process-steps { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -933,7 +989,7 @@
 
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stat"><span class="stat-val" id="count-projects" data-count="7">0</span><span class="stat-label">Zrealizowanych projektów</span></div>
+  <div class="stat"><span class="stat-val" id="count-projects" data-count="0">0</span><span class="stat-label">Zrealizowanych projektów</span></div>
   <div class="stat"><span class="stat-val" data-count="5" data-prefix="~" data-suffix=" dni">~0 dni</span><span class="stat-label">Czas realizacji</span></div>
   <div class="stat"><span class="stat-val" data-count="100" data-suffix="%">0%</span><span class="stat-label">Klientów z wizualizacją przed decyzją</span></div>
   <div class="stat"><span class="stat-val">HTML+</span><span class="stat-label">Pliki gotowe do wdrożenia</span></div>
@@ -943,7 +999,7 @@
 <section id="projects">
   <div class="section-header">
     <span class="section-title">Realizacje</span>
-    <span class="section-count" id="visible-count">7 projektów</span>
+    <span class="section-count" id="visible-count">Ładuję projekty...</span>
   </div>
 
   <!-- FILTER -->
@@ -961,21 +1017,25 @@
     <h2>Jak działa współpraca</h2>
     <div class="process-steps">
       <div class="step">
+        <div class="step-visual visual-brief" aria-hidden="true"><span></span><span></span><span></span></div>
         <p class="step-num">Krok 01</p>
         <h3>Rozmowa i brief</h3>
         <p>Pytam o branżę, konkurencję i czego oczekujesz od strony. Wystarczy 15 minut.</p>
       </div>
       <div class="step">
+        <div class="step-visual visual-preview" aria-hidden="true"><span></span><span></span><span></span></div>
         <p class="step-num">Krok 02</p>
         <h3>Wizualizacja</h3>
         <p>W ciągu kilku dni dostarczam gotowy plik HTML — widzisz stronę zanim cokolwiek podpiszesz.</p>
       </div>
       <div class="step">
+        <div class="step-visual visual-revision" aria-hidden="true"><span></span><span></span><span></span></div>
         <p class="step-num">Krok 03</p>
         <h3>Poprawki</h3>
         <p>Zmieniamy kolory, treści, układ — aż będzie dokładnie tak jak chcesz.</p>
       </div>
       <div class="step">
+        <div class="step-visual visual-launch" aria-hidden="true"><span></span><span></span><span></span></div>
         <p class="step-num">Krok 04</p>
         <h3>Wdrożenie</h3>
         <p>Uruchamiam stronę na domenę, konfiguruję hosting i przekazuję wszystkie dostępy.</p>
@@ -998,7 +1058,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 Future IT Kamil Mikołajczyk · NIP 8992594431</p>
+  <p>© 2026 Kamil Mikołajczyk</p>
   <div class="footer-tools">
     <span class="tool-badge">Claude</span>
     <span class="tool-badge">Lovable</span>
@@ -1006,7 +1066,7 @@
     <span class="tool-badge">Codex</span>
     <span class="tool-badge">AI Studio</span>
     <span class="tool-badge">Trae</span>
-    <span class="tool-badge">Last commit: Update project contact data and previews</span>
+    <span class="tool-badge" id="commit-badge">Commit: sprawdzam...</span>
   </div>
 </footer>
 
@@ -1060,7 +1120,7 @@
     { meta: 'projects/teurgium/meta.json', slug: 'teurgium', browserLabel: 'Teurgium', previewImage: 'assets/previews/teurgium.grafika.png', previewPosition: 'center top' },
     { meta: 'projects/bikeon/meta.json', slug: 'bikeon', browserLabel: 'Serwis Rowerowy', previewImage: '', previewPosition: 'center top' },
     { meta: 'projects/matix/meta.json', slug: 'matix', browserLabel: 'Matix Bike', previewImage: 'assets/previews/matix-v1.png', previewPosition: 'center center', previewFit: 'contain', previewVersions: { 'index.html': 'assets/previews/matix-v1.png', 'v2.html': 'assets/previews/matix-v2.png', 'v3.html': 'assets/previews/matix-v3.png' } },
-    { meta: 'projects/serwis-samochodowy/meta.json', slug: 'serwis-samochodowy', browserLabel: 'tw?j-mechanik.pl', previewImage: 'assets/previews/serwis-samochodowy-preview.png', previewPosition: 'center top' },
+    { meta: 'projects/serwis-samochodowy/meta.json', slug: 'serwis-samochodowy', browserLabel: 'twój-mechanik.pl', previewImage: 'assets/previews/serwis-samochodowy-preview.png', previewPosition: 'center top' },
     { meta: 'projects/auto-v1/meta.json', slug: 'auto-v1', browserLabel: 'auto-serwisy.pl', previewImage: 'assets/previews/auto-v1.png', previewPosition: 'center top' },
     { meta: '', slug: 'kancelaria', browserLabel: 'Kancelaria', previewImage: 'assets/previews/kancelaria.grafika.png', previewPosition: 'center top', external: true, metaData: { id: 'kancelaria', title: 'Kancelaria Jowita Tomczak', industry: 'Prawo', category: 'usługi', description: 'Radca prawny — profesjonalna strona z listą specjalizacji i formularzem. Jasna paleta budująca zaufanie.', tools: 'HTML - CSS', timeToDeliver: '5 dni', previewUrl: '', liveUrl: 'https://kancelaria-jtomczak.pl', featured: false, colorAccent: '#D9A72F', colorBg: '#16213F', tags: ['HTML', 'Prawo', 'Minimalizm'], dateAdded: '2026-06' } }
   ];
@@ -1253,7 +1313,7 @@
     const sourceAttr = options.deferImage ? `src="${placeholder}" data-src="${escapeHtml(previewImage)}" fetchpriority="low"` : `src="${escapeHtml(previewImage)}"`;
     const previewFit = project.previewFit === 'contain' ? 'contain' : 'cover';
     const previewBg = project.previewFit === 'contain' ? `background:${escapeHtml(project.colorBg || '#111827')};` : '';
-    const image = previewImage ? `<img class="preview-img" ${sourceAttr} alt="Podgl?d projektu ${escapeHtml(project.title)} ${versionLabel(index)}" loading="lazy" decoding="async" style="object-fit:${previewFit};object-position:${escapeHtml(project.previewPosition || 'center top')};${previewBg}">${label}` : `${renderMock(project)}${label}`;
+    const image = previewImage ? `<img class="preview-img" ${sourceAttr} alt="Podgląd projektu ${escapeHtml(project.title)} ${versionLabel(index)}" loading="lazy" decoding="async" style="object-fit:${previewFit};object-position:${escapeHtml(project.previewPosition || 'center top')};${previewBg}">${label}` : `${renderMock(project)}${label}`;
     return `<div class="card-preview">
       <div class="preview-frame">
         <div class="browser-bar"><div class="browser-dot d-red"></div><div class="browser-dot d-yellow"></div><div class="browser-dot d-green"></div><div class="browser-url">${escapeHtml(project.browserLabel || project.title)}</div></div>
@@ -1284,7 +1344,11 @@
   function updateProjectCount(count = projects.filter(project => currentFilter === 'all' || (currentFilter === 'featured' ? project.featured : project.category === currentFilter)).length) {
     if (visibleCount) visibleCount.textContent = `${count} ${pluralProjects(count)}`;
     const counter = document.getElementById('count-projects');
-    if (counter) counter.dataset.count = String(projects.length || Number(counter.dataset.count || 0));
+    if (counter) {
+      const total = projects.length || Number(counter.dataset.count || 0);
+      counter.dataset.count = String(total);
+      counter.textContent = String(total);
+    }
   }
 
   function openProjectModal(project) {
@@ -1412,6 +1476,22 @@
     backToTop.classList.toggle('visible', window.scrollY > 500);
   }, { passive: true });
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  async function loadCommitBadge() {
+    const badge = document.getElementById('commit-badge');
+    if (!badge) return;
+
+    try {
+      const response = await fetch('https://api.github.com/repos/kamillimak/Projects/commits/main', { cache: 'no-store' });
+      if (!response.ok) throw new Error('GitHub commit unavailable');
+      const data = await response.json();
+      badge.textContent = `Commit: ${String(data.sha || '').slice(0, 7)}`;
+    } catch (error) {
+      badge.textContent = 'Commit: local';
+    }
+  }
+
+  loadCommitBadge();
 
   loadProjects().catch(error => {
     console.error(error);
