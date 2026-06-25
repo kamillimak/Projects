@@ -1531,6 +1531,26 @@
         </div>
       </div>
     </article>
+    <article class="proof-card certificate-card" tabindex="0" data-pdf="assets/certificates/ai-heroes-bieglosc-ai-kamil-mikolajczyk.pdf" data-title="AI Heroes 2026 : Biegłość w AI">
+      <div class="proof-visual">
+        <div class="certificate-cover">
+          <span class="certificate-pill">AI Heroes 2026</span>
+          <img src="assets/certificates/ai-heroes-bieglosc-ai-cover.png" alt="Pierwsza strona certyfikatu AI Heroes 2026: Biegłość w AI" loading="lazy" decoding="async" />
+        </div>
+      </div>
+      <div class="proof-body">
+        <h3>Biegłość w AI</h3>
+        <p>Ścieżka o praktycznym wykorzystaniu generatywnej AI w codziennej pracy: podstawy AI, Microsoft Copilot, odpowiedzialne użycie narzędzi, prompty, wyszukiwanie informacji i prosty agent w Copilot Studio.</p>
+        <div class="proof-meta">
+          <span>CloudTeam</span>
+          <span>6 modułów</span>
+          <span>25.06.2026</span>
+        </div>
+        <div class="proof-actions">
+          <a href="https://learn.ai-heroes.pl/?mode=register" target="_blank" rel="noopener" class="certificate-details">Szczegóły <span class="external-icon" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -2129,7 +2149,7 @@
       overlay.classList.remove('open');
       selectProjectForContact(project);
     };
-    modalNote.textContent = `CTA kontaktowe ustawi w formularzu projekt: „${project.title}".`;
+    modalNote.textContent = `CTA kontaktowe ustawi w formularzu projekt: „${project.title}”.`;
     overlay.classList.add('open');
   }
 
@@ -2329,16 +2349,6 @@
     grid.classList.remove('is-loading');
     grid.innerHTML = '<p class="render-status">Nie udało się załadować projektów. Sprawdź lokalny serwer HTTP.</p>';
   });
-</script>
-
-<!-- Animacja sylwetki przy scrollowaniu — tylko desktop (min 900px) -->
-<script>
-  if (window.innerWidth >= 900) {
-    var s = document.createElement('script');
-    s.src = 'assets/js/scroll-character.js';
-    s.defer = true;
-    document.body.appendChild(s);
-  }
 </script>
 
 </body>
