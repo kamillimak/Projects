@@ -1531,26 +1531,6 @@
         </div>
       </div>
     </article>
-    <!-- JSON-LD files are kept in assets/certificates for validation, but are intentionally hidden from the public card actions for now. -->
-    <!-- Future third certificate placeholder:
-    <article class="proof-card pending">
-      <div class="proof-visual">
-        <span class="proof-badge">Wkrótce</span>
-      </div>
-      <div class="proof-body">
-        <h3>Kolejny certyfikat AI</h3>
-        <p>Miejsce przygotowane pod trzeci certyfikat. Po dodaniu PDF i JSON-LD wystarczy podmienić treść, linki oraz datę wystawienia.</p>
-        <div class="proof-meta">
-          <span>AI</span>
-          <span>certyfikat</span>
-          <span>2026</span>
-        </div>
-        <div class="proof-actions">
-          <a href="#contact">Dodaj później</a>
-        </div>
-      </div>
-    </article>
-    -->
   </div>
 </section>
 
@@ -2149,7 +2129,7 @@
       overlay.classList.remove('open');
       selectProjectForContact(project);
     };
-    modalNote.textContent = `CTA kontaktowe ustawi w formularzu projekt: „${project.title}”.`;
+    modalNote.textContent = `CTA kontaktowe ustawi w formularzu projekt: „${project.title}".`;
     overlay.classList.add('open');
   }
 
@@ -2350,5 +2330,16 @@
     grid.innerHTML = '<p class="render-status">Nie udało się załadować projektów. Sprawdź lokalny serwer HTTP.</p>';
   });
 </script>
+
+<!-- Animacja sylwetki przy scrollowaniu — tylko desktop (min 900px) -->
+<script>
+  if (window.innerWidth >= 900) {
+    var s = document.createElement('script');
+    s.src = 'assets/js/scroll-character.js';
+    s.defer = true;
+    document.body.appendChild(s);
+  }
+</script>
+
 </body>
 </html>
