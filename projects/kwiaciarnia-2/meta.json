@@ -1,0 +1,17 @@
+{
+  "id": "kwiaciarnia-2",
+  "title": "Kwiaciarnia 2",
+  "industry": "Kwiaciarnia autorska",
+  "category": "usługi",
+  "description": "Kwiaciarnia autorska Zielnik: warianty shadcn i Gazeta oraz dwie palety pastelowe z katalogiem i bukietem 3D.",
+  "tools": "HTML · CSS · JavaScript · Three.js",
+  "timeToDeliver": "5 dni",
+  "previewUrl": "https://kamillimak.github.io/Projects/projects/kwiaciarnia-2/",
+  "liveUrl": "",
+  "featured": false,
+  "colorAccent": "#B08D46",
+  "colorBg": "#241812",
+  "tags": ["HTML", "Kwiaciarnia", "Warianty"],
+  "dateAdded": "2026-10",
+  "versions": ["index.html", "v2.html", "v3.html", "v4.html"]
+}

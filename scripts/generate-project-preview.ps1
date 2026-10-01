@@ -75,7 +75,7 @@ try {
     "--disable-gpu",
     "--hide-scrollbars",
     "--window-size=$Width,$Height",
-    "--screenshot=$Output",
+    "--screenshot=`"$Output`"",
     $url
   )
 

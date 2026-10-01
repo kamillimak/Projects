@@ -47,6 +47,18 @@ Use:
 - `meta.json` field `versions` to list committed variants.
 - Matching links on the portfolio card, modal, and inside every variant page.
 
+### One project split into several tiles
+
+When a project has too many variants for one card, split it into numbered tiles:
+
+- One folder per tile: `projects/[slug]-1/`, `projects/[slug]-2/`, each with its own `meta.json`, `index.html`, `v2.html`, etc.
+- Titles follow `[Name] 1`, `[Name] 2`; version labels restart at `v1` inside every tile.
+- Each tile gets its own entry in `PROJECT_SOURCES` in `index.html` and its own previews in `assets/previews/[slug]-N-*.png`.
+- Any switcher built into the project pages lists only the versions of its own tile.
+- Heavy shared assets (video, 3D models) live once in tile 1 and are referenced from tile 2 as `../[slug]-1/assets/...`. Do not delete tile 1 without moving them.
+
+Current split projects: `kwiaciarnia-1` / `kwiaciarnia-2` (4 + 4 versions), `twoj-mechanik-1` / `twoj-mechanik-2` (3 + 2 versions).
+
 ## Required project navigation
 
 Any project reachable from a portfolio card must provide an obvious return path:
